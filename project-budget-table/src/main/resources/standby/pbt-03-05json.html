@@ -1,0 +1,1052 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+
+<link rel="stylesheet" href="css/tabChange-transerse.css">
+
+<link rel="stylesheet" href="css/global.css" media="all">
+<link rel="stylesheet" href="css/boxy,jquery.fancybox-1.3.4.css">
+<link  href="css/aboutus.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/reg.css"  />
+<!-- jquery cleditor文本编辑器插件 -->
+<link rel="stylesheet" href="cleditor/jquery.cleditor.css" />
+    
+    
+<!-- <script type="text/javascript" src="js/jquery/2.0.0/jquery.min.js"></script>
+<script src="laydate/laydate.js"></script> -->
+<script>
+
+
+//外分包比例=外分包金额/项目标的（元）
+function subcontractRatio1() {
+  var targetAccount1 = document.getElementById("targetAccount1").value;
+  var epibolyAccount1 = document.getElementById("epibolyAccount1").value;
+  if((targetAccount1 !== "") && (epibolyAccount1 !== "")) {
+    var subcontractRatio1 = $("#subcontractRatio1").val(epibolyAccount1/targetAccount1);
+    subcontractRatio1.push();
+  }
+}
+//服务/项目周期=服务结束时间-服务开始时间
+function projectCircle1() {
+  console.log(12121);
+  var startTime1 = $("#startTime1").val();
+  var endTime1 = $("#endTime1").val();
+  if(startTime1 == 0|| startTime1 == null) {
+    alert("请先输入服务开始时间：");
+    if(endTime1 == 0 || endTime1 == null) {
+    alert("请输入服务结束时间：")
+    }
+  }
+  if((startTime1 !== "") && (endTime1 !== "")) {
+    var kaishi = new Date(startTime1);
+    var jieshu = new Date(endTime1);
+    var t1 = kaishi.getTime();
+    var t2 = jieshu.getTime();
+    var timeSecond = (t2-t1)/1000;
+    var timeDay = parseInt(timeSecond/(24*60*60));              //计算整天天数
+    var timeHour = (timeSecond - timeDay*24*60*60)/(60*60);     //算出天数后的小时数
+  }
+  var projectCircle1 = $("#projectCircle1").val(timeDay + "天");
+  console.log(projectCircle1);
+  projectCircle1.push();
+}
+//外部成本=外/分包金额+采购金额
+function externalCost1() {
+  var epibolyAccount1 = parseFloat($("#epibolyAccount1").val());
+  // console.log(epibolyAccount1);
+  var purchasingAmount1 = parseFloat($("#purchasingAmount1").val());
+  if((epibolyAccount1 !== "") && (purchasingAmount1 !== "")) {
+    var externalCost1 = $("#externalCost1").val(parseFloat(epibolyAccount1+purchasingAmount1));
+    externalCost1.push();
+  }
+}
+
+
+
+
+</script>
+<style type="text/css">
+.green{
+   background-color:green;
+}
+input{
+        border: none;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+} 
+.radio{
+		height: auto;
+    width: auto;
+	}
+</style>
+
+</head>
+
+<body>
+<form id="pro-info" method="post">
+<table id="mytable" style="border-collapse:collapse;" width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" class="cfuu">
+  <tr style="align-text: center;">
+    <th style="font-size:36px; color:red; text-align: center !important;" bgcolor="#99CC99" height="95" colspan="16" scope="row">
+    	<label>
+    		服务项目预算表
+    	</label>
+    </th>
+  </tr>
+<!--   <tr><td><input id="refId" name="refId" hidden="true"/></td></tr> -->
+  <tr>
+    <th width="125" height="49" scope="row">客户名称</th>
+    <td colspan="3"><input type="text" name="customerName" id="customerName"></td>
+    <td colspan="2">项目名称</td>
+    <td colspan="2"><input type="text" name="projectName"></td>
+    <td colspan="2">合同编号</td>
+    <td colspan="3"><input type="text" name="contractNumber"></td>
+    <td colspan="2">申请日期</td>
+    <td colspan="2">
+    	<!-- <input type="text" name="applyDate" id="time1"> -->
+    	<input name="applyDate" id="applyDate" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    </td>
+  </tr>
+  <tr>
+    <th height="81" scope="row">负责部门</th>
+    <td width="107"><input id="customer" type="text" name="responseDepartment"></td>
+    <td width="93">项目经理</td>
+    <td width="90"><input type="text" name="projectManager"></td>
+    <td colspan="2">项目标的（元）</td>
+    <td colspan="2"><input id="targetAccount1" onchange="subcontractRatio1();" type="text" name="projectMoney"></td>
+    <td colspan="2">项目类型</td>
+    <td colspan="3">
+    	<select name="projectType" id="projectType" class="input-txt">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+    </td>
+    <td colspan="2">项目性质</td>
+    <td colspan="2">
+    	<select name="projectForm" id="projectForm" class="input-txt">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+    </td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">服务形式</th>
+    <td colspan="3" align="center">
+		<!-- <input class="radio" type="radio" name="serviceForm" value="1"><span>常驻</span>
+		<input class="radio" type="radio" name="serviceForm" value="2">巡检
+		<input class="radio" type="radio" name="serviceForm" value="3">应急 -->
+		<select name="serviceForm" id="serviceForm" class="input-txt">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+	</td>
+    <td colspan="2">服务或实施周期</td>
+    <td colspan="2">
+    	<!-- <input id="projectCircle1" type="text" name="" readonly="true"> -->
+    	<input name="time" id="time" class="input-txt"  onclick=serviceCircle()  />
+    </td>
+    <td colspan="2">服务开始时间</td>
+    <td colspan="3">
+    	<!-- <input name="startTime" id="startTime1" onchange="projectCircle1();" type="text"> -->
+    	<input name="startTime" id="startTime" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    </td>
+    <td colspan="2">服务结束时间</td>
+    <td colspan="2">
+    	<!-- <input name="endTime" id="endTime1" onchange="projectCircle1();" type="text"> -->
+    	<input name="endTime" id="endTime" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    </td>
+  </tr>
+
+</table>
+<table id="mytable00" style="border-collapse:collapse;" width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" class="cfuu00">
+  
+  
+  
+  <tr id="pp2">
+  	<!-- <th width="125" height="49" scope="row">客户名称</th> -->
+    <th width="125" height="49" id="pp3" rowspan="100" scope="row">
+    	项目人力成本及职责
+    	<!-- <br><span  onclick="addTr()">添加</span> -->
+    </th>
+    <td width="107" height="81" rowspan="2">职位</td>
+    <td width="93" rowspan="2">日均成本</td>
+    <td width="90" rowspan="2">姓名</td>
+    <td width="192" height="64" colspan="3">5*8项目（天）</td>
+    <td width="192" colspan="3">7*8项目（天）</td>
+    <td width="192" colspan="3">7*24项目（天）</td>
+    <td width="53" rowspan="2">合计天数</td>
+    <td width="85" rowspan="2">成本统计</td>
+    <td width="125" rowspan="2">项目职责备注</td>
+  </tr>
+  <tr id="pp3">
+    <td width="" height="81">日常</td>
+    <td width="">双休日</td>
+    <td width="">国定日</td>
+    <td width="">日常</td>
+    <td width="">双休日</td>
+    <td width="">国定日</td>
+    <td width="">日常</td>
+    <td width="">双休日</td>
+    <td width="">国定日</td>
+  </tr>
+  
+  
+
+  <tr id="pp4">
+    <td height="49" id="">
+    	<select name="servicerPosition" id="servicerPosition" class="input-select servicerPosition" onchange="getCost()">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+    </td>
+    <td id="averageDailyCost1">
+    	<select name="averageCost" id="averageCost" class="input-select averageCost">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+    </td>
+    <td><input type="text" name="servicerName" class="servicerName"></td>
+    <td><input type="text" name="everyday5" class="everyday5"></td>
+    <td><input type="text" name="weekendsday5" class="weekendsday5"></td>
+    <td><input type="text" name="nationalday5" class="nationalday5"></td>
+    <td><input type="text" name="everyday7" class="everyday7"></td>
+    <td><input type="text" name="weekendsday7" class="weekendsday7"></td>
+    <td><input type="text" name="nationalday7" class="nationalday7"></td>
+    <td><input type="text" name="everyday24" class="everyday24"></td>
+    <td><input type="text" name="weekendsday24" class="weekendsday24"></td>
+    <td><input type="text" name="nationalday24" class="nationalday24"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><input type="text" name="dutyNote" class="dutyNote"></td>
+  </tr>
+  
+  
+  <!-- <img style="position: relative;" src="images/+.png"/> -->
+<!--   <tr>
+  	<td id="pp6" colspan="16"> -->
+  		<!-- cfuu id="addTable" -->
+  		<!-- <button><img src="images/+.png" onclick="addTable()" id="bti"/></button> -->
+    	<!-- <span onclick="addTable()">添加</span> -->
+    	<!-- <span onclick="addTr()">添加</span> -->
+<!--     </td>
+  </tr> -->
+  
+  
+  <tr id="zz1">
+    <td height="64" colspan="3">
+    	<span style="float: left" onclick="addTr()"><img src="images/+1.png"/></span>
+	    合计（天）：
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+</table><br>
+<table id="mytable" style="border-collapse:collapse;" width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" class="cfuu"> 
+  
+  
+  <tr>
+    <th height="49" scope="row">项目外/分包</th>
+    <td>外/分包内容</td>
+    <td colspan="2"><input type="text" name="subcontractContent"></td>
+    <td colspan="2">外/分包商信息</td>
+    <td colspan="2"><input type="text" name="subcontractMessage"></td>
+    <td colspan="2">外/分包比例</td>
+    <td colspan="2">
+    	<!-- <input id="subcontractRatio1" type="text" name="" readonly="true"> -->
+    </td>
+    <td colspan="2">外/分包金额</td>
+    <td colspan="2"><input id="epibolyAccount1" type="text" name="subcontractMoney" onkeyup="subcontractRatio1();externalCost1();"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">项目采购</th>
+    <td>采购清单</td>
+    <td colspan="10"><input type="text" name="purchaseList"></td>
+    <td colspan="2">采购金额</td>
+    <td colspan="2"><input id="purchasingAmount1" onkeyup="externalCost1();" type="text" name="purchaseMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">耗材及零星采购</th>
+    <td>主要清单</td>
+    <td colspan="10"><input type="text" name="mainList"></td>
+    <td colspan="2">零星采购金额</td>
+    <td colspan="2"><input type="text" name="fragmentaryMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">项目费用</th>
+    <td>费用明细</td>
+    <td colspan="10"><input type="text" name="costBreakdown"></td>
+    <td colspan="2">费用金额</td>
+    <td colspan="2"><input type="text" name="costMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">项目奖励</th>
+    <td>毛利</td>
+    <td colspan="10">&nbsp;</td>
+    <td colspan="2">奖励金额</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">成本汇总</th>
+    <td>外部成本</td>
+    <td colspan="2">
+    	<!-- <input id="externalCost1" type="text" name="" readonly="true"> -->
+    </td>
+    <td colspan="2">内部成本</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2">合计</td>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2">投入产出比</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <th height="72" scope="row">项目负责人意见</th>
+    <td colspan="3" align="center">
+						<input class="radio" type="radio" name="suggestion1" value="1"><span>同意</span>
+						<input class="radio" type="radio" name="suggestion1" value="2">不同意
+					</td>
+    <td>签名：</td>
+    <td>
+    	<input type="text" name="">
+    </td>
+    <td>日期：</td>
+    <td>
+    	<input type="text" name="">
+    </td>
+    <td colspan="2">部门意见</td>
+    <td colspan="2">
+        <input class="radio" type="radio" name="suggestion1" value="1"><span>同意</span><br>
+        <input class="radio" type="radio" name="suggestion1" value="2">不同意
+    </td>
+    <td>签名：</td>
+    <td>
+    	<input type="text" name="">
+    </td>
+    <td>日期：</td>
+    <td>
+    	<input type="text" name="">
+    </td>
+  </tr>
+  <tr>
+    <th height="120" scope="row">S1服务管理中心意见</th>
+    <td colspan="3" align="center">
+						<input class="radio" type="radio" name="suggestion2" value="1"><span>同意</span>
+						<input class="radio" type="radio" name="suggestion2" value="2">不同意
+					</td>
+    <td>签名：</td>
+    <td>
+    	<input type="text" name="">
+    </td>
+    <td>日期：</td>
+    <td>
+    	<input type="text" name="">
+    </td>
+    <td colspan="8" style="height: auto;margin-bottom: 10px;text-align: left !important;">备注：<br>
+      1、常驻服务项目，按合同规定的服务周期计算工作日（每年250工作日）；非常驻服务项目，按预计工作日计算。<br>
+      2、黄底色项有下拉菜单可选。“职位”中下拉列表中选择对应岗位，填写天数，即可自动计算。<br>
+      3、项目分包和项目采购，必须由询价组询价。<br>
+    4、对于到达符合发放项目奖励条件的服务项目，才予以奖励发放；未达到或不符合发放条件的，将进行相应扣除或取消奖励。具体详见《S1服务人员奖惩机制》。</td>
+  </tr>
+  
+  
+  <tr height="72px">
+  	<td colspan="16">
+        <!-- <button class="reg-login" type="button"  onclick="submitFunction1()">保存</button> -->
+        <!-- <button class="reg-login" type="button"  id="doSave">保存</button> -->
+        <button class="reg-login" type="button" onclick="submit2()">保存</button>
+        <!-- <input type="button" class="reg-login" onclick="submitFunction1()" value="保存"/> -->
+        <button class="reg-login" type="reset" value="重置">重置</button>
+    </td>
+  </tr>
+</table>
+</form>
+
+
+
+
+<!-- <script>
+//执行一个laydate实例
+laydate.render({
+  elem: '#time1' //指定元素
+});
+laydate.render({
+  elem: '#startTime1', //指定元素
+  done: function() {
+    projectCircle1();
+  }
+});
+laydate.render({
+  elem: '#endTime1', //指定元素
+  //choose: function(){ Day();},
+  // choose: function() { projectCircle1();}
+  done: function() {
+    projectCircle1();
+  }
+});
+
+</script> -->
+
+<script src="js/jquery.min.js"></script>
+<script src="js/tabChange-transerse.js"></script>
+
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script> 
+<!-- <script type="text/javascript" src="js/jquery.min.js"></script>   -->
+<!-- jquery cleditor文本编辑器插件 -->
+<script src="cleditor/jquery.cleditor.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#content").cleditor();
+        
+    });
+    
+    $(window).load(function() {
+    	$("#content").cleditor();
+    	getProjectType();
+    	getProjectForm();
+    	getServiceForm();
+    	getServicerPosition();
+    	getWorkType();
+    	getCost();
+    	//addTable();
+    	//getAverageCost();
+    	//getRefId();
+    });
+	
+    //refId请求页面时即已生成
+    function getRefId() {
+    	var id=$('#refId');
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getRefId",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result1=eval(data);
+    			$(result1).each(function(index) {
+    				var val=obj[index];
+    				$(id).append(
+    						"<input value='"+val.refId+"'/>"
+    						);
+    			});
+    			/* var result=data;
+    			$.each(result,function(i,value) {
+    				$(id).append(
+    					"<input value='"+refId+"'/>"		
+    				);
+    				var code = $("#refId").val();
+    		    	console.log(code);
+    			}); */
+    		}
+    	});
+    	/* var code = $("#refId").val();
+    	console.log(code); */
+    }
+    
+    function getProjectType() {
+        var which = $('#projectType');
+        $(which).empty();
+        $(which).append("<option value='0'>---请选择项目类别---</option>");
+        $.ajax({
+            type : 'POST',
+            url : "/getProjectType",
+            //              contentType:"application/json;charset=utf-8",
+            dataType : 'json',
+            //              data:'{"id":"1","memory_type":"asd"}',
+            success : function(data) {
+                var result = data;
+                //                  var notEmpty = data.notempty;                                            
+                $.each(result, function(i, value) {
+                    $(which).append(
+                            "<option value='"+value.ptypeId+"'>" + value.projectType
+                                    + "</option>");
+                    
+                    /* "<option value='"+value.id+"'>" + value.memory_type
+                    + "</option>"); */
+                });
+            }
+        });     
+    }
+    
+    //获取project_form
+    function getProjectForm() {
+    	var which = $('#projectForm');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getProjectForm",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.pformId+"'>" + value.projectForm + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    //获取service_form
+    function getServiceForm() {
+    	var which = $('#serviceForm');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择服务形式---</option>");
+    	$.ajax({
+    		type: "POST",
+    		url: "/getServiceForm",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.sformId+"'>" + value.serviceForm + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    //获取servicerPosition
+    function getServicerPosition() {
+    	var which = $('.servicerPosition');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择人员职位---</option>");
+    	$.ajax({
+    		type: "POST",
+    		url: "/getServicerPosition",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.spositionId+"'>" + value.servicerPosition + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	
+    	
+    }
+    /* function getCost() {
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	
+    	var ac = $('.averageCost');
+    	$(ac).empty();
+    	//$(ac).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		//url: "/getServicerPosition2?id="+code,
+    		url: "/getServicerPosition2",
+    		dataType: 'json',
+    		//data:{"content":content,"memoryId":memoryId},
+    		data: {"id":code},
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(ac).append(
+    	    				"<option value='"+value.spositionId+"'>" + value.averageCost + "</option>"		
+    	    			);
+    			});
+    			
+    		}
+    	});
+    	
+    	
+    } */
+    function getCost() {
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	
+    	var ac = $('.averageCost');
+    	$(ac).empty();
+    	$(ac).append("<option value='0'>---请选择日均薪资---</option>");
+    	//$(ac).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		//url: "/getServicerPosition2?id="+code,
+    		url: "/getServicerPosition",
+    		dataType: 'json',
+    		//data:{"content":content,"memoryId":memoryId},
+    	//	data: {"id":code},
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(ac).append(
+    	    				"<option value='"+value.spositionId+"'>" + value.averageCost + "</option>"		
+    	    			);
+    			});
+    			
+    		}
+    	});
+    	
+    	
+    }
+    
+    
+/*     function getAverageCost2() {//如果第一个下拉列表的值改变则调用此方法  
+    	console.log(123);
+        //var code = $("#servicerPosition option:selected").attr("id");//得到第一个下拉列表的值
+        var code = $("#servicerPosition option:selected").attr("id");
+        console.log(code);
+        if(code!=null && "" != code&& -1 != code){  
+                //通过ajax传入后台，把orderTypeName数据传到后端  
+            $.post("getServicerPosition",{code:code},function(data){  
+                    var res = $.parseJSON(data);//把后台传回的json数据解析  
+                    var option;  
+                    option="<option>"+"选择您购买的专柜"+"</option>" ; 
+                    $.each(res,function(i,n){//循环，i为下标从0开始，n为集合中对应的第i个对象  
+                        option += "<option value='"+n.servicerPosition+"'>"+n.servicerPosition+"</option>"  
+                    });  
+                    $("#averageCost").html(option);//将循环拼接的字符串插入第二个下拉列表  
+                    $("#averageCost").show();//把第二个下拉列表展示  
+            });  
+          
+        }else {  
+            $("#shoppe").hide();  
+        }  
+    } */
+    
+    
+    
+    
+  /*   function getAverageCost() {
+    	var ac = $('#averageCost');
+    	$(ac).empty();
+    	$(ac).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getServicerPosition",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(ac).append(
+    	    				"<option value='"+value.spositionId+"'>" + value.averageCost + "</option>"		
+    	    			);
+    			});
+    			
+    		}
+    	});
+    } */
+    
+    //获取workType
+    function getWorkType() {
+    	var which = $('#workType');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择项目类型---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getWorkType",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.wtypeId+"'>" + value.workType + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    
+/*     function submitFunction1() {
+        //这里唯一需要注意的就是这个form-add的id
+        var formData = new FormData($("#pro-info")[0]);
+        $.ajax({
+            //接口地址
+            url: '/upMemory' ,
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //成功的回调
+                if(data.code == 300){
+                }
+            },
+            error: function (returndata) {
+               //请求异常的回调		 // modals.warn("网络访问失败，请稍后重试!");
+            }
+        });
+        window.location.href='/memory_list';
+    } */
+    
+    function submitFunction1111111111() {
+    	var formData = new FormData($("#pro-info")[0]);
+    	console.log("000");
+    	$.ajax({
+    		url: '/insertProInfo',
+    		type: 'POST',
+    		data: formData,
+    		async: false,
+    		cache: false,
+    		contentType: false,
+    		processData: false,
+    		success: function(data) {
+    			if(data.code == 300){
+    				
+    			}
+    		},
+    		error: function(returndata) {
+    			
+    		}
+    	});
+    	/* window.location.href='/displayIndex'; */
+    	/* window.location.href="/url?r="+t.getTime(); */
+    }
+    //服务周期time=endTime-startTime
+    function serviceCircle() {
+    	console.log("服务周期初始");
+    	var startTime = $('#startTime').val();
+    	var endTime = $('#endTime').val();
+    	if(startTime == 0 || startTime == null) {
+    		alert("请先输入开始时间");
+    	}
+    	else if(endTime == 0 || endTime == null){
+    			alert("请输入结束时间");
+    		}
+    	else if((startTime != "") && (endTime != "")) {
+    		var st = new Date(startTime);
+    		var et = new Date(endTime);
+    		var s = st.getTime();
+    		var e = et.getTime();
+    		var timeSecond = (e-s)/1000;
+    		var timeDay = parseInt(timeSecond/(60*60*24));
+    		var timeMonth = timeDay/30;
+    		var timeYear = timeDay/365;
+    		var timeHour = (timeSecond - timeDay*24*60*60)/(60*60);
+    		var timeHourRound = Math.round(timeHour);
+    	}
+    	var time = $('#time').val(timeDay + '天' + timeHourRound + '时');
+    	console.log(time);
+    	time.push();
+    }
+    
+    /* function addTable() {
+    	console.log("9");
+    	$('#labor-tr').parent().append("<tr><td>新增</td></tr>");
+    } */
+    /* function setTr() {
+    	return '<tr>xiiiiii-00000</tr>';
+    }
+    $('#bti').click(function(){
+    	$('#labor-tr').parent().append(setTr);
+    }) */
+    
+    function addTable() {
+    	//选取你的table，添加一行
+        /* $("#mytable").append("<tr><td>---</td></tr>") */
+        /* $("#mytable").append("<tr><td>"+$("mytable tr td:first").html()+'</td></tr>') */
+        /* $("#labor-tr").parent().append("<tr>"+$("tr:first").html()+'</tr>') */
+      /*   $("#labor-tr").parent().append("<tr>"+$("tr:first").html()+'</tr>') */
+      
+    	 var tables = $('.cfuu #pp3');
+
+    	 var addtr = $("<tr>"+
+    	 "<td><input type='text' name='name' /></td>"+
+    	 "<td><input type='text' name='age' /></td>"+
+    	 "<td><input type='text' name='sex' /></td>"+
+    	 "<td><span  onclick='deleteTrRow(this);'>&nbsp;删除</span></td>"+
+    	 "</tr>");
+
+    	      addtr.appendTo(tables);     
+    	 	//$('#qq1').append("<tr><td>---</td></tr>")
+
+    }
+    
+    
+    function addTr(){
+
+    //　　　　var tb=document.getElementById("mytable");
+
+  //  　　　　var newTr=tb.insertRow(8);//表示在第二行后添加一行
+
+    　　　//　var newTd=newTr.insertCell();//表示在添加的行上添加第一格
+
+    　　　//　newTd.innerHTML="邮箱:";
+
+  //  　　　　var newTd2=newTr.insertCell();//表示在添加的行上添加第二格
+
+    　　　　/* newTd.innerHTML="<input type='text' name='email' />"; */
+    /* newTr.innerHTML="<tr>"+$("mytable:ceshi").html()+'</tr>'; */
+   /*  newTr.innerHTML=$("tr:eq(8)").html(); */
+  /*  var ww = $("tr:eq(7)").html();
+   var ww1 = "<tr>" + ww + '</tr>'; */
+   /* newTr.append("<tr id='labor'><td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-txt' onchange='getCost()'>
+            <option  value='0'>---请选择类别---</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-txt'><option  value='0'>---请选择类别---</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td></tr>");
+
+    　　} */
+/*     var addtr = $("<td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-txt' onchange='getCost()'><option  value='0'>---请选择类别---</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-txt'><option  value='0'>---请选择类别---</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td>");
+ */   
+ 
+// 	var addtr = $("<tr><td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-txt' onchange='getCost()'><option  value='0'>---请选择类别---</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-txt'><option  value='0'>---请选择类别---</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td></tr>");
+
+    /* var tables = $('.cfuu #ceshi'); */
+//    var tables = $('.cfuu00 :#pp4');
+//    addtr.appendTo(tables);
+    
+    
+/*     var tb=document.getElementById("table1");
+
+　　　　var newTr=tb.insertRow(2); */
+//    var c1=$('#mytable00');
+var ww = $("tr:eq(6)").html();
+console.log(ww);
+	var tb=document.getElementById("mytable00");
+    var t1=tb.insertRow(2);
+/*     t1.innerHTML="<tr><td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-txt' onchange='getCost()'><option  value='0'>---请选择类别---</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-txt'><option  value='0'>---请选择类别---</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td></tr>";
+ */
+ 
+ 
+/*  	   t1.innerHTML="<tr><td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-select' onchange='getCost()'><option value='0'>---请选择人员职位---</option><option value='1'>初级工程师</option><option value='2'>工程师</option><option value='3'>高级工程师</option><option value='4'>资深工程师</option><option value='5'>首席工程师</option><option value='6'>初级项目经理</option><option value='7'>项目经理</option><option value='8'>高级项目经理</option><option value='9'>资深项目经理</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-select'><option value='0'>---请选择类别---</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td><td><span  onclick='deleteTrRow(table,this);'>&nbsp;删除</span></td></tr>";
+ */
+  t1.innerHTML="<tr><td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-select servicerPosition'><option value='0'>---请选择人员职位---</option><option value='1'>初级工程师</option><option value='2'>工程师</option><option value='3'>高级工程师</option><option value='4'>资深工程师</option><option value='5'>首席工程师</option><option value='6'>初级项目经理</option><option value='7'>项目经理</option><option value='8'>高级项目经理</option><option value='9'>资深项目经理</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-select averageCost'><option value='0'>---请选择日均薪资---</option><option value='1'>300</option><option value='2'>400</option><option value='3'>600</option><option value='4'>900</option><option value='5'>1200</option><option value='6'>500</option><option value='7'>700</option><option value='8'>900</option><option value='9'>1200</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td><td><span  onclick='deleteTrRow(mytable00,this);'>&nbsp;删除</span></td></tr>";
+
+  /* <td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-select averageCost'><option value='0'>---请选择日均薪资---</option><option value='1'>300</option><option value='2'>400</option><option value='3'>600</option><option value='4'>900</option><option value='5'>1200</option><option value='6'>500</option><option value='7'>700</option><option value='8'>900</option><option value='9'>1200</option></select></td> */
+ 
+ /*  <td height='49' id=''><select name='servicerPosition' id='servicerPosition' class='input-select' onchange='getCost()'><option value='0'>---请选择人员职位---</option><option value='1'>初级工程师</option><option value='2'>工程师</option><option value='3'>高级工程师</option><option value='4'>资深工程师</option><option value='5'>首席工程师</option><option value='6'>初级项目经理</option><option value='7'>项目经理</option><option value='8'>高级项目经理</option><option value='9'>资深项目经理</option></select></td><td id='averageDailyCost1'><select name='averageCost' id='averageCost' class='input-select'><option value='0'>---请选择类别---</option></select></td><td><input type='text' name='servicerName'></td><td><input type='text' name='everyday5'></td><td><input type='text' name='weekendsday5'></td><td><input type='text' name='nationalday5'></td><td><input type='text' name='everyday7'></td><td><input type='text' name='weekendsday7'></td><td><input type='text' name='nationalday7'></td><td><input type='text' name='everyday24'></td><td><input type='text' name='weekendsday24'></td><td><input type='text' name='nationalday24'></td><td>&nbsp;</td><td>&nbsp;</td><td><input type='text' name='dutyNote'></td>
+ */    
+ }
+ function deleteTrRow(mytable00, row){
+	     //多一个parent就代表向前一个标签,
+	     //本删除范围为<td><tr>两个标签,即向前两个parent
+	     //如果多一个parent就会删除整个table
+	   /*   $(tr).remove(); */
+	 var ind = row.parentElement.parentElement.rowIndex;
+	 mytable00.tBodies[0].deleteRow(ind);
+	 }
+ 
+ //添加的行删除（未完成）
+ var yugi = {
+         col: 6,
+         addRow: function(table) {
+             var vals = [a.value, b.value, c.value, d.value, e.value, "<a href='###' onclick='yugi.del(table,this)'>删除</a>"];
+             var tr = table.insertRow(table.tBodies[0].rows.length);
+             for (var i = 0; i < yugi.col; i++) {
+                 var td = tr.insertCell(tr.cells.length);
+                 td.innerHTML = vals[i];
+             }
+         },
+         del: function(table, row) {
+             var ind = row.parentElement.parentElement.rowIndex;
+             table.tBodies[0].deleteRow(ind);
+         }
+     }
+
+	
+	
+	
+
+ 
+ 
+ function submit2() {
+	//JSON字符串转换JSON对象
+		var a = JSON.parse("{\"title\":\"\",\"data\":[]}");
+		var arr = new Array();
+		// 遍历table表格多个数据 这里加 tbody 去掉table的标题栏，否则会用空行数据     tr:not(:first):not(:last)
+		var which =$("#mytable00 tbody tr:not(:last)");
+		which.each(function (i, e) {//每一行,选择器自己修改
+			// 遍历每一行
+			// 封装对象
+			if(i>1){
+				console.log(i);
+			var PayObj =
+			{
+					servicerPosition: "",
+					 //averageCost: "",
+					 servicerName: "",
+					 everyday5: "",
+					 weekendsday5: "",
+					 nationalday5: "",
+					 everyday7: "",
+					 weekendsday7: "",
+					 nationalday7: "",
+					 everyday24: "",
+					 weekendsday24: "",
+					 nationalday24: "",
+					 dutyNote: "",
+			};
+			var row = {};
+			$("#mytable00").find("input,select").each(function (ii, ee) {//每行里面需要提交的数据 遍历每一行的数据 寻找每一行内的标签
+
+				var inputs = $(ee);
+				
+				var obj = {};
+				// inpputs.val 每一行的数据
+				obj = inputs.val();
+				// 截断字符串 取每一行的属性name名字
+				var sliceStr = inputs.attr("name");
+				if(sliceStr != undefined && sliceStr != 'undefined' && sliceStr  != null){
+					
+					// 寻找每一行的数据的属性 因为每行的name属性 如 同一个属性 属性name名多条数据是多个 late_charge_rate1 late_charge_rate2
+					if(sliceStr.substring(0,sliceStr.length) == 'servicerPosition'){
+						console.log("vvvvvv");
+						PayObj.servicerPosition = inputs.val();
+						console.log(inputs.val());
+						console.log("22xxxxxxxx");
+					} else if(sliceStr.substring(0,sliceStr.length) == 'servicerName'){
+						PayObj.servicerName = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'late_charge_start_day'){
+						PayObj.lateChargeStartDay = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'everyday5'){
+						PayObj.everyday5 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'weekendsday5'){
+						PayObj.weekendsday5 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'nationalday5'){
+						PayObj.nationalday5 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'everyday7'){
+						PayObj.everyday7 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'weekendsday7'){
+						PayObj.weekendsday7 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'nationalday7'){
+						PayObj.nationalday7 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'everyday24'){
+						PayObj.everyday24 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'weekendsday24'){
+						PayObj.weekendsday24 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'nationalday24'){
+						PayObj.nationalday24 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'dutyNote'){
+						PayObj.dutyNote = inputs.val();
+					}
+				}
+				row[inputs.attr("name")] = obj;
+	
+			});
+			arr.push(row);
+			// 向JSON数组添加JSON对象的方法；很关键
+			a.data.push(PayObj);
+			
+	}
+			
+		});
+		// 格式化数据 JSON对象转化为JSON字符串
+		var s= JSON.stringify(a);
+		console.log(s);
+ }
+ 
+ 
+ 
+
+/* 	// 封装json对象方法
+	function submit2(){
+		//JSON字符串转换JSON对象
+		var a = JSON.parse("{\"title\":\"\",\"data\":[]}");
+		var arr = new Array();
+		// 遍历table表格多个数据 这里加 tbody 去掉table的标题栏，否则会用空行数据
+//		$("#mytable00 tbody tr").each(function (i, e) {//每一行,选择器自己修改
+			// 遍历每一行
+			// 封装对象
+			var PayObj =
+			{
+					 servicerPosition: "",
+					 //averageCost: "",
+					 servicerName: "",
+					 everyday5: "",
+					 weekendsday5: "",
+					 nationalday5: "",
+					 everyday7: "",
+					 weekendsday7: "",
+					 nationalday7: "",
+					 everyday24: "",
+					 weekendsday24: "",
+					 nationalday24: "",
+			};
+	//封装表格数据
+	//获取行数（包括thead）
+//	var rows = $("#mytable00").rows.length;
+	var rows = document.getElementById("mytable00").rows.length; //获得行数(包括thead)
+	console.log(rows);
+	//获取列数，从对三行获取数据的列数
+//	var columns = $("#mytable00").row[2].cells.length;
+	var colums = document.getElementById("mytable00").rows[2].cells.length; //获得列数 
+	console.log(colums);
+	
+	
+	if(rows>2) {
+		console.log(rows);
+		for(var i=2;i<rows-1;i++) {	//从有数据的那一行开始（本页面数据行从第三行开始），倒数第二行结束（本页面最后一行是统计数据）
+			
+			console.log("999");
+			var PayObj = new Object();//这里要new新的对象，不然保存的都是一样的数据（都是最后一行的数据）
+			//PayObj.servicerPosition=document.getElementById("mytable00").rows[i].cells[0].childNodes[1].innerHTML;//cell[1]是因为本页面第一列是标题
+			PayObj.servicerPosition=document.getElementById("mytable00").rows[i].cells[0].innerHTML;
+			console.log(PayObj);
+		//	var sliceStr = PayObj.attr("name");
+			console.log(PayObj);
+				//obj.servicerPosition=$("#mytable00").row[i].cell[1].innerHTML;  //不能用jQuery，原因未明
+			//PayObj.averageCost=document.getElementById("mytable00").rows[i].cells[1].innerHTML;
+			PayObj.servicerName=document.getElementById("mytable00").rows[i].cells[2].innerHTML;
+			PayObj.everyday5=document.getElementById("mytable00").rows[i].cells[3].innerHTML;
+			PayObj.weekendsday5=document.getElementById("mytable00").rows[i].cells[4].innerHTML;
+			PayObj.nationalday5=document.getElementById("mytable00").rows[i].cells[5].innerHTML;
+			PayObj.everyday7=document.getElementById("mytable00").rows[i].cells[6].innerHTML;
+			PayObj.weekendsday7=document.getElementById("mytable00").rows[i].cells[7].innerHTML;
+			PayObj.nationalday7=document.getElementById("mytable00").rows[i].cells[8].innerHTML;
+			PayObj.everyday24=document.getElementById("mytable00").rows[i].cells[9].innerHTML;
+			PayObj.weekendsday24=document.getElementById("mytable00").rows[i].cells[10].innerHTML;
+			PayObj.nationalday24=document.getElementById("mytable00").rows[i].cells[11].innerHTML;
+			//obj.averageCost=$("#mytable00").row[i].cell[2].innerHTML;
+			//obj.servicerName=$("#mytable00").row[i].cell[3].innerHTML;
+			//obj.everyday5=$("#mytable00").row[i].cell[4].innerHTML;
+			//obj.weekendsday5=$("#mytable00").row[i].cell[5].innerHTML;
+			//obj.nationalday5=$("#mytable00").row[i].cell[6].innerHTML;
+			//obj.everyday7=$("#mytable00").row[i].cell[7].innerHTML;
+			//obj.weekendsday7=$("#mytable00").row[i].cell[8].innerHTML;
+			//obj.nationalday7=$("#mytable00").row[i].cell[9].innerHTML;
+			//obj.everyday24=$("#mytable00").row[i].cell[10].innerHTML;
+			//obj.weekendsday24=$("#mytable00").row[i].cell[11].innerHTML;
+			//obj.nationalday24=$("#mytable00").row[i].cell[12].innerHTML;
+		//	a.data.add(obj);//向json数组添加json对象
+		
+		console.log(a.data);
+		a.data.push(PayObj);
+		}
+	}
+
+		//格式化数据，将json对象转换为json字符串
+		var objon=JSON.stringify(a);
+		console.log(objon);
+		//return JSON.stringify(a);
+		
+		//异步提交数据
+
+        $.ajax({
+                  url: "/insertProInfo",
+                  type: "post",
+                  data: {'param': PayObj},//参数
+                  datatype: "json",
+                  success: function (data) {
+                      var obj = eval("(" + data + ")");
+                      if (obj.success) {
+                          mini.unmask();
+                          alert(obj.message);
+                          
+                          location.reload();
+                      }
+                      else {
+                          mini.unmask();
+                          alert(obj.message);
+                      }
+                  }
+              });
+} */
+
+    
+</script> 
+</body>
+</html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab切换-横向</title>
+    <link rel="stylesheet" href="css/tabChange-transerse.css">
+
+    <link rel="stylesheet" href="css/global.css" media="all">
+    <link rel="stylesheet" href="css/boxy,jquery.fancybox-1.3.4.css">
+    <link  href="css/aboutus.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/reg.css"  />
+    <!-- jquery cleditor文本编辑器插件 -->
+    <link rel="stylesheet" href="cleditor/jquery.cleditor.css" />
+    <script type="text/javascript">
+        var userjson = '';
+        var c_cityinfo = '';
+    </script>
+</head>
+<body>
+<div class="tct-wrap">
+    <div class="inner">
+        <!--nav-->
+        <ul class="tct-nav clearfix">
+            <li class="l">项目基本信息表</li>
+            <li class="l">项目人力职责表</li>
+            <li class="l">项目费用表</li>
+            <li class="l">项目附录表</li>
+            <li class="l">项目预算表信息页</li>
+        </ul>
+        <!--content-->
+        <div class="tct-content" title="项目基本信息表">
+            <div class="tct-con-list">
+                <!-- <img src="static/images/1.jpg"/> -->
+                <div class="bottom_c_r">
+                    <h2 style="width:100%; height:40px; line-height:41px; background:#83bb4a url(images/reg-title-bg.png) repeat-x; 
+                    color:#fefefe; text-indent:25px; font-size:20px; font-family:\9ED1\4F53; font-weight:400;">服务项目预算表</h2>
+                    <form id="pro-info" method="post" class="reg-form">
+                        <table>
+                            <tr>
+                                <td>
+                                    <p><label>客户名称</label>
+                                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                                    </p>
+                                </td>
+                                <td>
+                                    <p><label>项目名称</label>
+                                        <input type="text" name="projectName" class="input-txt" id="projectName" autocomplete="off" size="20">
+                                    </p>
+                                </td>
+                                <td>
+                                    <p><label>合同编号</label>
+                                        <input type="text" name="contractNumber" class="input-txt" id="contractNumber" autocomplete="off" size="20">
+                                    </p>
+                                </td>
+                                <td>
+                                    <p><label for="applyDate">申请日期</label>
+                                        <input name="applyDate" class="input-txt" id="applyDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})">
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p><label>负责部门</label>
+                                        <input type="text" name="responseDepartment" class="input-txt" id="responseDepartment" autocomplete="off" size="20">
+                                    </p>
+                                </td>
+                                <td>
+                                    <p><label>项目经理</label>
+                                        <input type="text" name="projectManager" class="input-txt" id="projectManager" autocomplete="off" size="20">
+                                    </p>
+                                </td>
+                                <td>
+                                    <p><label>项目金额</label>
+                                        <input type="text" name="projectMoney" class="input-txt" id="projectMoney" autocomplete="off" size="20">
+                                    </p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <p><label for="projectType"><em>*</em>项目类型
+                                    </label>
+                                    <select name="projectType" id="projectType" class="input-txt">
+                                        <option  value='0'>---请选择类别---</option>
+                                    </select>
+                                </p>
+                            </td>
+                            <td>
+                                <p><label for="projectForm"><em>*</em>项目性质
+                                </label>
+                                <select name="projectForm" id="projectForm" class="input-txt">
+                                    <option  value='0'>---请选择类别---</option>
+                                </select>
+                            </p>
+                        </td>
+                        <td>
+                            <p><label for="serviceForm"><em>*</em>服务形式
+                            </label>
+                            <select name="serviceForm" id="serviceForm" class="input-txt">
+                                <option  value='0'>---请选择类别---</option>
+                            </select>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label for="startTime"><em>*</em>开始时间：
+                        </label>
+                        <input name="startTime" id="startTime" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+                    </p>
+                </td>
+                <td>
+                    <p><label for="endTime"><em>*</em>结束时间：
+                    </label>
+                    <input name="endTime" id="endTime" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+                </p>
+            </td>
+            <td>
+                <p><label for="time"><em>*</em>服务周期：
+                </label>
+                <input name="time" id="time" class="input-txt"  onclick=serviceCircle()  />
+            </p>
+        </td>
+    </tr>
+
+<!--     <tr>
+    <td>
+        <p><label>负责部门</label>
+            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+        </p>
+    </td>
+    <td>
+        <p><label>项目经理</label>
+            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+        </p>
+    </td>
+    <td>
+        <p><label>项目金额</label>
+            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+        </p>
+    </td>
+</tr> -->
+            <tr>
+                <td>
+                    <button class="reg-login" type="button"  onclick="submitFunction1()">保存</button>
+                </td>
+            </tr>   
+        </table>
+    </form>
+</div>
+</div>
+
+
+<div class="tct-con-list" title="项目人力职责表">
+    <div class="bottom_c_r">
+        <h2 style="width:100%; height:40px; line-height:41px; background:#83bb4a url(images/reg-title-bg.png) repeat-x; 
+        color:#fefefe; text-indent:25px; font-size:20px; font-family:\9ED1\4F53; font-weight:400;">服务项目预算表</h2>
+        <form id="form100" method="post" class="reg-form">
+            <table>
+                <tr>
+                    <td>
+                        <p><label for="servicerPosition"><em>*</em>职位：
+                        </label>
+                        <select name="servicerPosition" id="servicerPosition" class="input-txt" onchange="getCost()">
+                            <option  value='0'>---请选择类别---</option>
+                        </select>
+                    </p>
+                </td>
+                <td>
+                    <p><label>日均成本：</label>
+                        <!-- <input type="averageCost" name="averageCost" class="input-txt" id="averageCost2" autocomplete="off" size="20"> -->
+                        <select name="averageCost" id="averageCost" class="input-txt">
+                            <option  value='0'>---请选择类别---</option>
+                        </select>
+                    </p>
+                </td>
+                <td>
+                    <p><label>姓名：</label>
+                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p><label for="workType"><em>*</em>工作类别：
+                    </label>
+                    <select name="workType" id="workType" class="input-txt">
+                        <option  value='0'>---请选择类别---</option>
+                    </select>
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p><label>日常：</label>
+                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                    </p>
+                </td>
+                <td>
+                    <p><label>双休日：</label>
+                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                    </p>
+                </td>
+                <td>
+                    <p><label>国定日：</label>
+                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p><label>合计天数：</label>
+                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                    </p>
+                </td>
+                <td>
+                    <p><label>成本统计：</label>
+                        <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <p><label>项目职责备注：</label></p>
+                    <div style="height: auto;margin-bottom: 10px !important;">
+                        <textarea height="150px" name="requestDescription" id="content" style="width: 300px; height: 10px; margin: 0 auto;"></textarea>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button class="reg-login" type="button"  onclick="submitFunction()">保存</button>
+                    <button class="reg-login" type="reset" value="添加">添加</button>
+                </td>
+                <td>
+                	<button class="reg-login" type="button" value="完毕">完毕</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>                
+</div>
+
+
+<div class="tct-con-list" title="项目费用表">
+    <div class="bottom_c_r">
+        <h2 style="width:100%; height:40px; line-height:41px; background:#83bb4a url(images/reg-title-bg.png) repeat-x; 
+        color:#fefefe; text-indent:25px; font-size:20px; font-family:\9ED1\4F53; font-weight:400;">服务项目预算表</h2>
+        <form id="form100" method="post" class="reg-form">
+            <table>
+                <tr>
+                    <td>
+                        <p><label>日常合计：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>双休合计：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>国定合计：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label>总天数：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>人力总成本：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label>外/分包内容</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>外/分包信息</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>外/分包比例</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>外/分包金额</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="3">
+                        <p style="width: 90px;height: 32px !important"><label>采购清单</label></p>
+                        <input style="width: 643px !important" type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off">
+                    </td>
+                    <td>
+                        <p><label>采购金额</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <p style="width: 90px;height: 32px !important"><label>主要清单</label></p>
+                        <input style="width: 643px !important" type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off">
+                    </td>
+                    <td>
+                        <p><label>零星采购金额</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <p style="width: 90px;height: 32px !important"><label>费用明细</label></p>
+                        <input style="width: 643px !important" type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off">
+                    </td>
+                    <td>
+                        <p><label>费用金额</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <p style="width: 90px;height: 32px !important"><label>毛利</label></p>
+                        <input style="width: 643px !important" type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off">
+                    </td>
+                    <td>
+                        <p><label>奖励金额</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label>外部成本</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>内部成本</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>合计</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>投入产出比</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label for="upload"><em>*</em>附件上传：</label>
+                            <input name="file" type="file" id="url">
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="reg-login" type="button"  onclick="submitFunction()">保存</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+
+            <div class="tct-con-list" title="项目附录表">
+<div class="bottom_c_r">
+        <h2 style="width:100%; height:40px; line-height:41px; background:#83bb4a url(images/reg-title-bg.png) repeat-x; 
+        color:#fefefe; text-indent:25px; font-size:20px; font-family:\9ED1\4F53; font-weight:400;">服务项目预算表</h2>
+        <form id="form100" method="post" class="reg-form">
+            <table>
+                <tr>
+                    <td>
+                        <p><label for="memory_type">负责人意见：
+                        </label>
+                            <select name="memory_type" id="type" class="input-txt">
+                                <option  value='0'>---请选择类别---</option>
+                            </select>
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>签名：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>日期：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label for="memory_type"><em>*</em>部门意见：
+                        </label>
+                            <select name="memory_type" id="type" class="input-txt">
+                                <option  value='0'>---请选择类别---</option>
+                            </select>
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>签名：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>日期：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p><label for="memory_type"><em>*</em>S1意见：
+                        </label>
+                            <select name="memory_type" id="type" class="input-txt">
+                                <option  value='0'>---请选择类别---</option>
+                            </select>
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>签名：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                    <td>
+                        <p><label>日期：</label>
+                            <input type="text" name="customerName" class="input-txt" id="customerName" autocomplete="off" size="20">
+                        </p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align-last: left !important" colspan="4">备注：<br>
+      1、常驻服务项目，按合同规定的服务周期计算工作日（每年250工作日）；非常驻服务项目，按预计工作日计算。<br>
+      2、黄底色项有下拉菜单可选。“职位”中下拉列表中选择对应岗位，填写天数，即可自动计算。<br>
+      3、项目分包和项目采购，必须由询价组询价。<br>
+    4、对于到达符合发放项目奖励条件的服务项目，才予以奖励发放；未达到或不符合发放条件的，将进行相应扣除或取消奖励。具体详见《S1服务人员奖惩机制》。
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button class="reg-login" type="button"  onclick="submitFunction()">保存</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+            </div>
+            
+
+            <div class="tct-con-list" title="项目预算表信息页">
+                项目预算表信息页
+            </div>
+            
+            
+            
+<!-- <table id="mytable">
+       <tr id="myTr">
+            <td>
+                 第一行
+            </td>
+        </tr>
+        <tr id="myTr2">
+        	
+        	<td><button onclick="add()">+</button></td>
+        </tr>
+        
+        <tr>
+        	<td>333</td>
+        </tr>
+</table> -->
+
+ 
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/tabChange-transerse.js"></script>
+
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="js/jquery.min.js"></script>  
+<!-- jquery cleditor文本编辑器插件 -->
+<script src="cleditor/jquery.cleditor.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#content").cleditor();
+    });
+    
+    $(window).load(function() {
+    	$("#content").cleditor();
+    	getProjectType();
+    	getProjectForm();
+    	getServiceForm();
+    	getServicerPosition();
+    	getWorkType();
+    	//getAverageCost();
+    });
+
+    //获取project_type
+    function getProjectType() {
+        var which = $('#projectType');
+        $(which).empty();
+        $(which).append("<option value='0'>---请选择项目类别---</option>");
+        $.ajax({
+            type : 'POST',
+            url : "/getProjectType",
+            //              contentType:"application/json;charset=utf-8",
+            dataType : 'json',
+            //              data:'{"id":"1","memory_type":"asd"}',
+            success : function(data) {
+                var result = data;
+                //                  var notEmpty = data.notempty;                                            
+                $.each(result, function(i, value) {
+                    $(which).append(
+                            "<option value='"+value.ptypeId+"'>" + value.projectType
+                                    + "</option>");
+                    
+                    /* "<option value='"+value.id+"'>" + value.memory_type
+                    + "</option>"); */
+                });
+            }
+        });     
+    }
+    
+    //获取project_form
+    function getProjectForm() {
+    	var which = $('#projectForm');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getProjectForm",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.pformId+"'>" + value.projectForm + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    //获取service_form
+    function getServiceForm() {
+    	var which = $('#serviceForm');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择服务形式---</option>");
+    	$.ajax({
+    		type: "POST",
+    		url: "/getServiceForm",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.sformId+"'>" + value.serviceForm + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    //获取servicerPosition
+    function getServicerPosition() {
+    	var which = $('#servicerPosition');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择人员职位---</option>");
+    	$.ajax({
+    		type: "POST",
+    		url: "/getServicerPosition",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.spositionId+"'>" + value.servicerPosition + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	
+    	
+    }
+    function getCost() {
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	
+    	var ac = $('#averageCost');
+    	$(ac).empty();
+    	//$(ac).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		//url: "/getServicerPosition2?id="+code,
+    		url: "/getServicerPosition2",
+    		dataType: 'json',
+    		//data:{"content":content,"memoryId":memoryId},
+    		data: {"id":code},
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(ac).append(
+    	    				"<option value='"+value.spositionId+"'>" + value.averageCost + "</option>"		
+    	    			);
+    			});
+    			
+    		}
+    	});
+    	
+    	
+    }
+    
+    
+/*     function getAverageCost2() {//如果第一个下拉列表的值改变则调用此方法  
+    	console.log(123);
+        //var code = $("#servicerPosition option:selected").attr("id");//得到第一个下拉列表的值
+        var code = $("#servicerPosition option:selected").attr("id");
+        console.log(code);
+        if(code!=null && "" != code&& -1 != code){  
+                //通过ajax传入后台，把orderTypeName数据传到后端  
+            $.post("getServicerPosition",{code:code},function(data){  
+                    var res = $.parseJSON(data);//把后台传回的json数据解析  
+                    var option;  
+                    option="<option>"+"选择您购买的专柜"+"</option>" ; 
+                    $.each(res,function(i,n){//循环，i为下标从0开始，n为集合中对应的第i个对象  
+                        option += "<option value='"+n.servicerPosition+"'>"+n.servicerPosition+"</option>"  
+                    });  
+                    $("#averageCost").html(option);//将循环拼接的字符串插入第二个下拉列表  
+                    $("#averageCost").show();//把第二个下拉列表展示  
+            });  
+          
+        }else {  
+            $("#shoppe").hide();  
+        }  
+    } */
+    
+    
+    
+    
+  /*   function getAverageCost() {
+    	var ac = $('#averageCost');
+    	$(ac).empty();
+    	$(ac).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getServicerPosition",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(ac).append(
+    	    				"<option value='"+value.spositionId+"'>" + value.averageCost + "</option>"		
+    	    			);
+    			});
+    			
+    		}
+    	});
+    } */
+    
+    //获取workType
+    function getWorkType() {
+    	var which = $('#workType');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择项目类型---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getWorkType",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.wtypeId+"'>" + value.workType + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    
+/*     function submitFunction1() {
+        //这里唯一需要注意的就是这个form-add的id
+        var formData = new FormData($("#pro-info")[0]);
+        $.ajax({
+            //接口地址
+            url: '/upMemory' ,
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                //成功的回调
+                if(data.code == 300){
+                }
+            },
+            error: function (returndata) {
+               //请求异常的回调		 // modals.warn("网络访问失败，请稍后重试!");
+            }
+        });
+        window.location.href='/memory_list';
+    } */
+    
+    function tab1(){
+        var nav=$(".tct-nav li").eq(1),
+            tabCon=$(".tct-con-list").eq(1);
+        nav.addClass("active");
+        tabCon.show();
+        $(".tct-nav li").not(nav).removeClass("active");
+        $(".tct-con-list").not(tabCon).hide();
+    }
+    function submitFunction1() {
+    	var formData = new FormData($("#pro-info")[0]);
+    	console.log("000");
+    	$.ajax({
+    		url: '/insertProInfo',
+    		type: 'POST',
+    		data: formData,
+    		async: false,
+    		cache: false,
+    		contentType: false,
+    		processData: false,
+    		success: function(data) {
+    			if(data.code == 300){
+    				
+    			}
+    		},
+    		error: function(returndata) {
+    			
+    		}
+    	});
+    	tab1();
+    	/* window.location.href='/displayIndex'; */
+    }
+    //服务周期time=endTime-startTime
+    function serviceCircle() {
+    	console.log("服务周期初始");
+    	var startTime = $('#startTime').val();
+    	var endTime = $('#endTime').val();
+    	if(startTime == 0 || startTime == null) {
+    		alert("请先输入开始时间");
+    	}
+    	else if(endTime == 0 || endTime == null){
+    			alert("请输入结束时间");
+    		}
+    	else if((startTime != "") && (endTime != "")) {
+    		var st = new Date(startTime);
+    		var et = new Date(endTime);
+    		var s = st.getTime();
+    		var e = et.getTime();
+    		var timeSecond = (e-s)/1000;
+    		var timeDay = parseInt(timeSecond/(60*60*24));
+    		var timeMonth = timeDay/30;
+    		var timeYear = timeDay/365;
+    		var timeHour = (timeSecond - timeDay*24*60*60)/(60*60);
+    		var timeHourRound = Math.round(timeHour);
+    	}
+    	var time = $('#time').val(timeDay + '天' + timeHourRound + '时');
+    	console.log(time);
+    	time.push();
+    }
+    
+    function add() {
+    	//选取你的table，添加一行
+        /* $("#mytable").append("<tr><td>---</td></tr>") */
+        $("#myTr").parent().append("<tr>"+$("tr:first").html()+'</tr>')
+    }
+    function setTr() {
+    	return '<tr>xiiiiii-00000</tr>';
+    }
+    /* $('#bti').click(function(){
+    	$('#myTr2').parent().append(setTr());
+    }) */
+    /* function add() {
+    	//选取你的table，添加一行
+        $("#myTr2").parent().append(setTr());
+    } */
+  
+    
+</script> 
+</body>
+</html>

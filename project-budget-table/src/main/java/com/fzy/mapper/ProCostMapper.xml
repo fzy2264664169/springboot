@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fzy.mapper.ProCostMapper">
+    
+    <resultMap type="ProCost" id="procost">
+        <id column="cost_id" property="costId"/>
+        <result column="subcontract_content" property="subcontractContent"/>
+        <result column="subcontract_message" property="subcontractMessage"/>
+        <result column="subcontract_money" property="subcontractMoney"/>
+        <result column="purchase_list" property="purchaseList"/>
+        <result column="purchase_money" property="purchaseMoney"/>
+        <result column="main_list" property="mainList"/>
+        <result column="fragmentary_money" property="fragmentaryMoney"/>
+        <result column="cost_breakdown" property="costBreakdown"/>
+        <result column="cost_money" property="costMoney"/>
+        <result column="ref_id" property="refId"/>
+        
+        <result column="suggestion1" property="suggestion1"/>
+        <result column="suggestion1" property="suggestion1"/>
+        <result column="suggestion1" property="suggestion1"/>
+        <result column="principal_name" property="principalName"/>
+        <result column="principal_date" property="principalDate"/>
+        <result column="section_name" property="sectionName"/>
+        <result column="section_date" property="sectionDate"/>
+        <result column="center_name" property="centerName"/>
+        <result column="center_date" property="centerDate"/>
+    </resultMap>
+    
+    <sql id="pro-cost">
+        <!-- ref_id, -->
+        cost_id,subcontract_content,subcontract_message,
+        subcontract_money,purchase_list,purchase_money,
+        main_list,fragmentary_money,
+        cost_breakdown,cost_money,
+        suggestion1,suggestion2,suggestion3,
+        principal_name,principal_date,
+        section_name,section_date,
+        center_name,center_date
+    </sql>
+    
+    <select id="findAll" resultMap="procost">
+        select
+        	<include refid="pro-cost"></include>
+        from pro_cost
+    </select>
+    
+    <select id="findByRefId" resultMap="procost" parameterType="string">
+        select
+        	pc.ref_id,
+        	<include refid="pro-cost"></include>
+        from pro_cost pc
+        where pc.ref_id=#{value}
+    </select>
+    
+    <insert id="insertProCost">
+        insert into pro_cost(ref_id,cost_id,subcontract_content,subcontract_message,
+        subcontract_money,purchase_list,purchase_money,
+        main_list,fragmentary_money,
+        cost_breakdown,cost_money,
+        suggestion1,suggestion2,suggestion3,
+        principal_name,principal_date,
+        section_name,section_date,
+        center_name,center_date)
+        values(#{refId},#{costId},#{subcontractContent},#{subcontractMessage},#{subcontractMoney},
+        #{purchaseList},#{purchaseMoney},#{mainList},#{fragmentaryMoney},#{costBreakdown},#{costMoney}
+        ,#{suggestion1},#{suggestion2},#{suggestion3},#{principalName},#{principalDate},
+        #{sectionName},#{sectionDate},#{centerName},#{centerDate})
+    </insert>
+    
+    <delete id="deleteProCost" parameterType="string">
+        delete from pro_cost where ref_id=#{value}
+    </delete>
+</mapper>

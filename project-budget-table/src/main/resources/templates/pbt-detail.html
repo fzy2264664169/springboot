@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+		Charisma v1.0.0
+
+		Copyright 2012 Muhammad Usman
+		Licensed under the Apache License v2.0
+		http://www.apache.org/licenses/LICENSE-2.0
+
+		http://usman.it
+		http://twitter.com/halalit_usman
+	-->
+<meta charset="utf-8">
+<title>项目预算</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description"
+	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+<meta name="author" content="Muhammad Usman">
+
+<!-- The styles -->
+<link id="bs-css" href="css/bootstrap-cerulean.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+</style>
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/charisma-app.css" rel="stylesheet">
+<link href="css/jquery-ui-1.8.21.custom.css" rel="stylesheet">
+<link href='css/fullcalendar.css' rel='stylesheet'>
+<link href='css/fullcalendar.print.css' rel='stylesheet' media='print'>
+<link href='css/chosen.css' rel='stylesheet'>
+<link href='css/uniform.default.css' rel='stylesheet'>
+<link href='css/colorbox.css' rel='stylesheet'>
+<link href='css/jquery.cleditor.css' rel='stylesheet'>
+<link href='css/jquery.noty.css' rel='stylesheet'>
+<link href='css/noty_theme_default.css' rel='stylesheet'>
+<link href='css/elfinder.min.css' rel='stylesheet'>
+<link href='css/elfinder.theme.css' rel='stylesheet'>
+<link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
+<link href='css/opa-icons.css' rel='stylesheet'>
+<link href='css/uploadify.css' rel='stylesheet'>
+
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+<!-- The fav icon -->
+<link rel="shortcut icon" href="img/favicon.ico">
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/sweetalert.min.js"></script>
+
+
+<style type="text/css">
+	td span {
+		font-family: KaiTi;
+		color: red;
+		font-weight: bolder;
+	}
+</style>
+
+
+</head>
+
+
+<body>
+	<!-- topbar starts -->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+				</a> <a class="brand" href="index.html"> <img alt="Charisma Logo"
+					src="img/logo20.png" /> <span>服务项目预算</span></a>
+
+				<!-- theme selector starts -->
+				<div class="btn-group pull-right theme-container">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-tint"></i><span class="hidden-phone"> 换肤</span> <span
+						class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" id="themes">
+						<li><a data-value="classic" href="#"><i
+								class="icon-blank"></i> 经典</a></li>
+						<li><a data-value="cerulean" href="#"><i
+								class="icon-blank"></i> 天蓝</a></li>
+						<li><a data-value="cyborg" href="#"><i class="icon-blank"></i>
+								酷黑</a></li>
+						<li><a data-value="redy" href="#"><i class="icon-blank"></i>
+								诱惑红</a></li>
+						<li><a data-value="journal" href="#"><i
+								class="icon-blank"></i> 自由</a></li>
+						<li><a data-value="simplex" href="#"><i
+								class="icon-blank"></i> 简约</a></li>
+						<li><a data-value="slate" href="#"><i class="icon-blank"></i>
+								岩黑</a></li>
+						<li><a data-value="spacelab" href="#"><i
+								class="icon-blank"></i> 灰色空间</a></li>
+						<li><a data-value="united" href="#"><i class="icon-blank"></i>
+								橘红</a></li>
+					</ul>
+				</div>
+				<!-- theme selector ends -->
+
+				<!-- user dropdown starts -->
+				<div class="btn-group pull-right">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						<i class="icon-user"></i><span class="hidden-phone"
+						th:text="${session.admin_name}"> admin</span> <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="#">Profile</a></li>
+						<li class="divider"></li>
+						<li><a href="exit">注销</a></li>
+					</ul>
+				</div>
+				<!-- user dropdown ends -->
+
+				<div class="top-nav nav-collapse">
+					<ul class="nav">
+						<li><a href="#">预算系统</a></li>
+						<li>
+							<form class="navbar-search pull-left">
+								<input placeholder="Search" class="search-query span2"
+									name="query" type="text">
+							</form>
+						</li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<!-- topbar ends -->
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<!-- left menu starts -->
+			<div class="span2 main-menu-span">
+				<div class="well nav-collapse sidebar-nav">
+					<ul class="nav nav-tabs nav-stacked main-menu">
+						<li class="nav-header hidden-tablet">项目预算</li>
+						<li><a class="ajax-link" href="pbt"><i
+								class="icon-plus-sign"></i><span class="hidden-tablet">
+									服务项目预算表</span></a></li>
+						<li><a class="ajax-link" href="pbt-list"><i
+								class="icon-plus-sign"></i><span class="hidden-tablet">
+									预算列表</span></a></li>
+						<li class="nav-header hidden-tablet">项目信息</li>
+						<li><a class="ajax-link" href="pbt-type"><i
+								class="icon-list-alt"></i><span class="hidden-tablet">
+									项目类型</span></a></li>
+						<li><a class="ajax-link" href="pbt-form"><i
+								class="icon-list-alt"></i><span class="hidden-tablet">
+									项目性质</span></a></li>
+						<li><a class="ajax-link" href="ser-form"><i
+								class="icon-list-alt"></i><span class="hidden-tablet">
+									服务形式</span></a></li>
+					</ul>
+				</div>
+				<!--/.well -->
+			</div>
+			<!--/span-->
+			<!-- left menu ends -->
+			<noscript>
+				<div class="alert alert-block span10">
+					<h4 class="alert-heading">Warning!</h4>
+					<p>
+						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+							target="_blank">JavaScript</a> enabled to use this site.
+					</p>
+				</div>
+			</noscript>
+
+			<div id="content" class="span10">
+				<!-- content starts -->
+				<div>
+					<ul class="breadcrumb">
+						<li><a href="#">项目预算</a> <span class="divider">/</span></li>
+						<li><a href="#">预算列表</a> <span class="divider">/</span></li>
+						<li><a href="#">view</a></li>
+					</ul>
+				</div>
+
+				<div class="row-fluid sortable">
+					<div class="box span12" style="width: 100%">
+						<div class="box-header well" data-original-title>
+							<h2>
+								<i class="icon-list-alt"></i>服务项目预算表信息
+							</h2>
+						</div>
+						<div style="background-color: #f1f1da;">
+
+							<table style="text-align: center; font-family: KaiTi;"
+								width="100%" border="1" th:each="proinfo,proinfoStat : ${proinfo}">
+								<caption>服务项目预算表</caption>
+								<div>
+								<tr>
+									<td colspan="2" width="12.5%">客户名称</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.customerName}"></span></td>
+									<td colspan="2" width="12.5%">项目名称</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.projectName}"></span></td>
+									<td colspan="2" width="12.5%">合同编号</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.contractNumber}"></span></td>
+									<td colspan="2" width="12.5%">申请日期</td>
+									<td colspan="2" width="12.5%"><span th:text="${#dates.format(proinfo.applyDate,'yyyy-MM-dd')}"></span></td>
+								</tr>
+								<tr>
+									<td colspan="2" width="12.5%">负责部门</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.responseDepartment}"></span></td>
+									<td colspan="2" width="12.5%">项目经理</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.projectManager}"></span></td>
+									<td colspan="2" width="12.5%">项目金额</td>
+									<td colspan="2" width="12.5%"><span id="proMoney" th:text="${proinfo.projectMoney}"></span></td>
+									<td colspan="2" width="12.5%">项目类型</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.infoPtype.projectType}"></span></td>
+								</tr>
+								<tr>
+									<td colspan="2" width="12.5%">项目性质</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.infoPform.projectForm}"></span></td>
+									<td colspan="2" width="12.5%">服务形式</td>
+									<td colspan="2" width="12.5%"><span th:text="${proinfo.infoSform.serviceForm}"></span></td>
+									<td colspan="2" width="12.5%">开始时间</td>
+									<td colspan="2" width="12.5%"><span th:text="${#dates.format(proinfo.startTime,'yyyy-MM-dd')}"></span></td>
+									<td colspan="2" width="12.5%">结束时间</td>
+									<td colspan="2" width="12.5%"><span th:text="${#dates.format(proinfo.endTime,'yyyy-MM-dd')}"></span></td>
+								</tr>
+								</div>
+							</table>
+
+							<table style="text-align: center; font-family: KaiTi;"
+								width="100%" border="1">
+								<tr>
+									<td rowspan="100" colspan="1" width="6.25%">项目人力职责及备注</td>
+									<td colspan="15" width="93.75%">
+									
+									
+										<table style="text-align: center; font-family: KaiTi;"
+											width="100%" border="1" >
+											<tr>
+												<td>职位</td>
+												<td>日均成本</td>
+												<td>姓名</td>
+												<td colspan="3">
+													<table style="text-align: center; font-family: KaiTi;"
+														width="100%" border="1">
+														<tr>
+															<td colspan="3">5 * 8项目（天）</td>
+														</tr>
+														<tr>
+															<td>日&nbsp;&nbsp;常</td>
+															<td>双休日</td>
+															<td>国定日</td>
+														</tr>
+													</table>
+												</td>
+												<td colspan="3">
+													<table style="text-align: center; font-family: KaiTi;"
+														width="100%" border="1">
+														<tr>
+															<td colspan="3">7 * 8项目（天）</td>
+														</tr>
+														<tr>
+															<td>日&nbsp;&nbsp;常</td>
+															<td>双休日</td>
+															<td>国定日</td>
+														</tr>
+													</table>
+												</td>
+												<td colspan="3">
+													<table style="text-align: center; font-family: KaiTi;"
+														width="100%" border="1">
+														<tr>
+															<td colspan="3">7*24项目（天）</td>
+														</tr>
+														<tr>
+															<td>日&nbsp;&nbsp;常</td>
+															<td>双休日</td>
+															<td>国定日</td>
+														</tr>
+													</table>
+												</td>
+												<td>合计天数</td>
+												<td>成本统计</td>
+												<td>职责备注</td>
+											</tr>
+
+											<!-- <tr th:each="prolabor,prolaborStat : ${prolabor}"> -->
+											<tr th:each="prolabor,prolaborStat : ${prolabor}">
+												<td><span th:text="${prolabor.servicerPosition}"></span></td>
+												<td><span class="ave1" th:text="${prolabor.averageCost}"></span></td>
+												<td><span th:text="${prolabor.servicerName}"></span></td>
+												<td><span class="eve5" th:text="${prolabor.everyday5}"></span></td>
+												<td><span class="wee5" th:text="${prolabor.weekendsday5}"></span></td>
+												<td><span class="nat5" th:text="${prolabor.nationalday5}"></span></td>
+												<td><span class="eve7" th:text="${prolabor.everyday7}"></span></td>
+												<td><span class="wee7" th:text="${prolabor.weekendsday7}"></span></td>
+												<td><span class="nat7" th:text="${prolabor.nationalday7}"></span></td>
+												<td><span class="eve24" th:text="${prolabor.everyday24}"></span></td>
+												<td><span class="wee24" th:text="${prolabor.weekendsday24}"></span></td>
+												<td><span class="nat24" th:text="${prolabor.nationalday24}"></span></td>
+												<td class="totDay" th:text="${prolabor.everyday5}+${prolabor.weekendsday5}+${prolabor.nationalday5}+${prolabor.everyday7}+${prolabor.weekendsday7}+${prolabor.nationalday7}+${prolabor.everyday24}+${prolabor.weekendsday24}+${prolabor.nationalday24}"></td>
+												<td class="cosStatistics" th:text="${prolabor.averageCost}*(${prolabor.everyday5}+${prolabor.weekendsday5}*2+${prolabor.nationalday5}*3+${prolabor.everyday7}+${prolabor.weekendsday7}*2+${prolabor.nationalday7}*3+${prolabor.everyday24}+${prolabor.weekendsday24}*2+${prolabor.nationalday24}*3)"></td>
+												<td><span th:text="${prolabor.dutyNote}"></span></td>
+											</tr>
+											<tr>
+												<td colspan="3">合计（天）：</td>
+												<!-- <td th:text="${#aggregates.sum(span[@class='eve5'])}"></td> -->
+												<td id="eve5"></td>
+												<td id="wee5"></td>
+												<td id="nat5"></td>
+												<td id="eve7"></td>
+												<td id="wee7"></td>
+												<td id="nat7"></td>
+												<td id="eve24"></td>
+												<td id="wee24"></td>
+												<td id="nat24"></td>
+												
+												<td id="totDay"></td>
+												<td id="cosStatistics" colspan="2"></td>
+												
+											</tr>
+										</table>
+
+
+
+									</td>
+								</tr>
+							</table>		
+							
+							
+							<table style="text-align: center; font-family: KaiTi;"
+								width="100%" border="1" th:each="procost,procostStat : ${procost}">
+								<tr>
+									<td width="20%">
+										项目外/分包
+									</td>
+									<td width="10%">
+										外/分包内容
+									</td>
+									<td width="10%"><span th:text="${procost.subcontractContent}"></span></td>
+									<td width="10%">
+										外/分包商信息
+									</td>
+									<td width="10%"><span th:text="${procost.subcontractMessage}"></span></td>
+									<td width="10%">
+										外/分包比例
+									</td>
+									<td id="subRatio" width="10%"></td>
+									<td width="10%">
+										外/分包金额
+									</td>
+									<td width="10%"><span id="subMoney" th:text="${procost.subcontractMoney}"></span></td>
+								</tr>
+								<tr>
+									<td width="20%">
+										项目采购
+									</td>
+									<td colspan="2" width="20%">
+										采购清单
+									</td>
+									<td colspan="2" width="20%"><span th:text="${procost.purchaseList}"></span></td>
+									<td colspan="2" width="20%">
+										采购金额
+									</td>
+									<td colspan="2" width="20%"><span id="purMoney" th:text="${procost.purchaseMoney}"></span></td>
+								</tr>
+								<tr>
+									<td width="20%">
+										耗材及零星采购
+									</td>
+									<td colspan="2" width="20%">
+										主要清单
+									</td>
+									<td colspan="2" width="20%"><span th:text="${procost.mainList}"></span></td>
+									<td colspan="2" width="20%">
+										零星采购金额
+									</td>
+									<td colspan="2" width="20%"><span id="fraMoney" th:text="${procost.fragmentaryMoney}"></span></td>
+								</tr>
+								<tr>
+									<td width="20%">
+										项目费用
+									</td>
+									<td colspan="2" width="20%">
+										费用明细
+									</td>
+									<td colspan="2" width="20%"><span th:text="${procost.costBreakdown}"></span></td>
+									<td colspan="2" width="20%">
+										费用金额
+									</td>
+									<td colspan="2" width="20%"><span id="cosMoney" th:text="${procost.costMoney}"></span></td>
+								</tr>
+								<tr>
+									<td width="20%">
+										项目奖励
+									</td>
+									<td colspan="2" width="20%">
+										毛利
+									</td>
+									<td id="groMargin" colspan="2" width="20%"></td>
+									<td colspan="2" width="20%">
+										奖励金额
+									</td>
+									<td id="bonMoney" colspan="2" width="20%"></td>
+								</tr>
+								<tr>
+									<td width="20%">
+										成本汇总
+									</td>
+									<td width="10%">
+										外部成本
+									</td>
+									<td id="extMoney" width="10%"></td>
+									<td width="10%">
+										内部成本
+									</td>
+									<td id="intMoney" width="10%"></td>
+									<td width="10%">
+										合计
+									</td>
+									<td id="summa" width="10%"></td>
+									<td width="10%">
+										投入产出比
+									</td>
+									<td id="inpOutputRatio" width="10%"></td>
+								</tr>
+								<tr>
+									<td width="20%">项目负责人意见</td>
+									<td colspan="2"><span th:text="${procost.suggestion1}"></span></td>
+									<td colspan="2">签名</td>
+									<td colspan="2"><span th:text="${procost.principalName}"></span></td>
+									<td>日期</td>
+									<td><span th:text="${#dates.format(procost.principalDate,'yyyy-MM-dd')}"></span></td>
+											<!-- <span th:text="${#dates.format(proinfo.endTime,'yyyy-MM-dd HH:mm:ss')}"></span> -->
+								</tr>
+								<tr>
+									<td width="20%">部门意见</td>
+									<td colspan="2"><span th:text="${procost.suggestion2}"></span></td>
+									<td colspan="2">签名</td>
+									<td colspan="2"><span th:text="${procost.sectionName}"></span></td>
+									<td>日期</td>
+									<td><span th:text="${#dates.format(procost.sectionDate,'yyyy-MM-dd')}"></span></td>
+								</tr>
+								<tr>
+									<td width="20%">S1服务管理中心意见</td>
+									<td colspan="2"><span th:text="${procost.suggestion3}"></span></td>
+									<td colspan="2">签名</td>
+									<td colspan="2"><span th:text="${procost.centerName}"></span></td>
+									<td>日期</td>
+									<td><span th:text="${#dates.format(procost.centerDate, 'yyyy-MM-dd')}"></span></td>
+								</tr>
+								<tr>
+									<td style="text-align: left" colspan="9">
+										备注：<br>
+      1、常驻服务项目，按合同规定的服务周期计算工作日（每年250工作日）；非常驻服务项目，按预计工作日计算。<br>
+      2、黄底色项有下拉菜单可选。“职位”中下拉列表中选择对应岗位，填写天数，即可自动计算。<br>
+      3、项目分包和项目采购，必须由询价组询价。<br>
+    4、对于到达符合发放项目奖励条件的服务项目，才予以奖励发放；未达到或不符合发放条件的，将进行相应扣除或取消奖励。具体详见《S1服务人员奖惩机制》。
+									</td>
+								</tr>
+								
+							</table>
+							
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
+			<!-- external javascript
+	================================================== -->
+			<!-- Placed at the end of the document so the pages load faster -->
+
+			<script>
+				$(window).load(function() {
+					getEveryday5();
+					getWeekendsday5();
+					getNationalday5();
+					getEveryday7();
+					getWeekendsday7();
+					getNationalday7();
+					getEveryday24();
+					getWeekendsday24();
+					getNationalday24();
+					getTotalDay();
+					getCostStatistics();
+					
+					getSubcontractRatio();
+					getExternalMoney();
+					getGrossMargin();
+					getBonusMoney();
+					getInternalMoney();
+					getSummation();
+					getInputOutputRatio();
+				});
+				/* $(document).ready(function() {
+					getEveryday5();
+					getWeekendsday5();
+					getNationalday5();
+					getEveryday7();
+					getWeekendsday7();
+					getNationalday7();
+					getEveryday24();
+					getWeekendsday24();
+					getNationalday24();
+					getTotalDay();
+					getCostStatistics();
+					
+					getSubcontractRatio();
+					getExternalMoney();
+					getGrossMargin();
+					getBonusMoney();
+					getInternalMoney();
+					getSummation();
+					getInputOutputRatio();
+				}) */
+				function getEveryday5() {
+					var which = $(".eve5");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#eve5").html(a);
+				}
+				function getWeekendsday5() {
+					var which = $(".wee5");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#wee5").html(a);
+				}
+				function getNationalday5() {
+					var which = $(".nat5");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#nat5").html(a);
+				}
+				
+				function getEveryday7() {
+					var which = $(".eve7");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#eve7").html(a);
+				}
+				function getWeekendsday7() {
+					var which = $(".wee7");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#wee7").html(a);
+				}
+				function getNationalday7() {
+					var which = $(".nat7");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#nat7").html(a);
+				}
+				
+				function getEveryday24() {
+					var which = $(".eve24");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#eve24").html(a);
+				}
+				function getWeekendsday24() {
+					var which = $(".wee24");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#wee24").html(a);
+				}
+				function getNationalday24() {
+					var which = $(".nat24");
+					var arr = [];
+					var a = 0;
+					$(which).each(function(i,e) {
+						arr[i] = $(this).text();	
+						a += Number(arr[i]);
+					})
+					$("#nat24").html(a);
+				}
+				
+				
+				function getTotalDay() {
+					var arr = [];
+					var a = 0;
+					var which = $(".totDay");
+					$(which).each(function(i,e) {
+						arr[i] = $(e).text();
+						a += Number(arr[i]);
+					});
+					$("#totDay").html(a);
+				}
+				
+				function getCostStatistics() {
+					var arr = [];
+					var a = 0;
+					var which = $(".cosStatistics");
+					$(which).each(function(i,e) {
+						arr[i] = $(e).text();
+						a += Number(arr[i]);
+					});
+					$("#cosStatistics").html(a);
+				}
+				
+				
+				function getSubcontractRatio() {
+					var subMoney = Number($("#subMoney").text());
+					var proMoney = Number($("#proMoney").text());
+					if(isFinite(subMoney/proMoney)){
+						$("#subRatio").html((subMoney/proMoney).toFixed(2)+"%");
+					}
+					
+				}
+				function getExternalMoney() {
+					var subMoney = Number($("#subMoney").text());
+					var purMoney = Number($("#purMoney").text());
+					$("#extMoney").html(subMoney+purMoney);
+				}
+				function getGrossMargin() {
+					var proMoney = Number($("#proMoney").text());
+					var cosStatistics = Number($("#cosStatistics").text());
+					var extMoney = Number($("#extMoney").text());
+					var fraMoney = Number($("#fraMoney").text());
+					var cosMoney = Number($("#cosMoney").text());
+					$("#groMargin").html(proMoney-cosStatistics-extMoney-fraMoney-cosMoney);
+				}
+				function getBonusMoney() {
+					var groMargin = Number($("#groMargin").text());
+					$("#bonMoney").html(groMargin*0.02);
+				}
+				function getInternalMoney() {
+					var cosStatistics = Number($("#cosStatistics").text());
+					var fraMoney = Number($("#fraMoney").text());
+					var cosMoney = Number($("#cosMoney").text());
+					var bonMoney = Number($("#bonMoney").text());
+					$("#intMoney").html(cosStatistics+fraMoney+cosMoney+bonMoney);
+				}
+				function getSummation() {
+					var extMoney = Number($("#extMoney").text());
+					var intMoney = Number($("#intMoney").text());
+					$("#summa").html(extMoney+intMoney);
+				}
+				function getInputOutputRatio() {
+					var proMoney = Number($("#proMoney").text());
+					var summa = Number($("#summa").text());
+					if(isFinite(proMoney/summa)) {
+						$("#inpOutputRatio").html((proMoney/summa).toFixed(2));
+					}
+				}
+				
+			</script>
+
+			<!-- jQuery -->
+			<script src="js/jquery-1.7.2.min.js"></script>
+			<!-- jQuery UI -->
+			<script src="js/jquery-ui-1.8.21.custom.min.js"></script>
+			<!-- transition / effect library -->
+			<script src="js/bootstrap-transition.js"></script>
+			<!-- alert enhancer library -->
+			<script src="js/bootstrap-alert.js"></script>
+			<!-- modal / dialog library -->
+			<script src="js/bootstrap-modal.js"></script>
+			<!-- custom dropdown library -->
+			<script src="js/bootstrap-dropdown.js"></script>
+			<!-- scrolspy library -->
+			<script src="js/bootstrap-scrollspy.js"></script>
+			<!-- library for creating tabs -->
+			<script src="js/bootstrap-tab.js"></script>
+			<!-- library for advanced tooltip -->
+			<script src="js/bootstrap-tooltip.js"></script>
+			<!-- popover effect library -->
+			<script src="js/bootstrap-popover.js"></script>
+			<!-- button enhancer library -->
+			<script src="js/bootstrap-button.js"></script>
+			<!-- accordion library (optional, not used in demo) -->
+			<script src="js/bootstrap-collapse.js"></script>
+			<!-- carousel slideshow library (optional, not used in demo) -->
+			<script src="js/bootstrap-carousel.js"></script>
+			<!-- autocomplete library -->
+			<script src="js/bootstrap-typeahead.js"></script>
+			<!-- tour library -->
+			<script src="js/bootstrap-tour.js"></script>
+			<!-- library for cookie management -->
+			<script src="js/jquery.cookie.js"></script>
+			<!-- calander plugin -->
+			<script src='js/fullcalendar.min.js'></script>
+			<!-- data table plugin -->
+			<script src='js/jquery.dataTables.min.js'></script>
+
+			<!-- chart libraries start -->
+			<script src="js/excanvas.js"></script>
+			<script src="js/jquery.flot.min.js"></script>
+			<script src="js/jquery.flot.pie.min.js"></script>
+			<script src="js/jquery.flot.stack.js"></script>
+			<script src="js/jquery.flot.resize.min.js"></script>
+			<!-- chart libraries end -->
+
+			<!-- select or dropdown enhancer -->
+			<script src="js/jquery.chosen.min.js"></script>
+			<!-- checkbox, radio, and file input styler -->
+			<script src="js/jquery.uniform.min.js"></script>
+			<!-- plugin for gallery image view -->
+			<script src="js/jquery.colorbox.min.js"></script>
+			<!-- rich text editor library -->
+			<script src="js/jquery.cleditor.min.js"></script>
+			<!-- notification plugin -->
+			<script src="js/jquery.noty.js"></script>
+			<!-- file manager library -->
+			<script src="js/jquery.elfinder.min.js"></script>
+			<!-- star rating plugin -->
+			<script src="js/jquery.raty.min.js"></script>
+			<!-- for iOS style toggle switch -->
+			<script src="js/jquery.iphone.toggle.js"></script>
+			<!-- autogrowing textarea plugin -->
+			<script src="js/jquery.autogrow-textarea.js"></script>
+			<!-- multiple file upload plugin -->
+			<script src="js/jquery.uploadify-3.1.min.js"></script>
+			<!-- history.js for cross-browser state change on ajax -->
+			<script src="js/jquery.history.js"></script>
+			<!-- application script for Charisma demo -->
+			<script src="js/charisma.js"></script>
+</body>
+</html>

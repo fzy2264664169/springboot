@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fzy.mapper.ProLaborMapper">
+    
+    <resultMap type="ProLabor" id="prolabor">
+        <id column="labor_id" property="laborId"/>
+        <result column="servicer_name" property="servicerName"/>
+        <result column="average_cost" property="averageCost"/>
+        <result column="everyday5" property="everyday5"/>
+        <result column="wenkendsday5" property="wenkendsday5"/>
+        <result column="nationalday5" property="nationalday5"/>
+        <result column="duty_note" property="dutyNote"/>
+        <result column="everyday7" property="everyday7"/>
+        <result column="weekendsday7" property="weekendsday7"/>
+        <result column="nationalday7" property="nationalday7"/>
+        <result column="everyday24" property="everyday24"/>
+        <result column="weekendsday24" property="weekendsday24"/>
+        <result column="nationalday24" property="nationalday24"/>
+        <result column="ref_id" property="refId"/>
+        
+        <result column="servicer_position" property="servicerPosition"/>
+        <!-- <association property="laborSposition" javaType="com.fzy.domain.LaborSposition">
+            <id column="sposition_id" property="spositionId"/>
+            <result column="servicer_position" property="servicerPosition"/>
+        </association> -->
+    </resultMap>
+    
+    <sql id="pro-labor">
+        <!-- ref_id, -->
+        servicer_position,average_cost,servicer_name,duty_note,
+        everyday5,everyday7,everyday24,
+        weekendsday5,weekendsday7,weekendsday24,
+        nationalday5,nationalday7,nationalday24
+    </sql>
+    
+    <select id="findAll" resultMap="prolabor">
+        select
+        	<include refid="pro-labor"></include>
+        from pro_labor
+        <!-- spositon_id在两个数据库中都有，不指明查找的是哪一个，会报错（模糊字段） -->
+    </select>
+    
+    <insert id="insertProLabor">
+        insert into pro_labor(ref_id,servicer_position,average_cost,servicer_name,duty_note,
+        everyday5,everyday7,everyday24,weekendsday5,weekendsday7,weekendsday24,
+        nationalday5,nationalday7,nationalday24)
+        values(#{refId},#{servicerPosition},#{averageCost},#{servicerName},#{dutyNote},
+        #{everyday5},#{everyday7},#{everyday24},
+        #{weekendsday5},#{weekendsday7},#{weekendsday24},
+        #{nationalday5},#{nationalday7},#{nationalday24})
+    </insert>
+    
+    <select id="findByRefId" resultMap="prolabor" parameterType="string">
+        select
+        	pl.ref_id,
+        	<include refid="pro-labor"></include>
+        from pro_labor pl
+        where pl.ref_id=#{value}
+    </select>
+    
+    <delete id="deleteProLabor" parameterType="string">
+        delete from pro_labor where ref_id=#{value}
+    </delete>
+    
+</mapper>

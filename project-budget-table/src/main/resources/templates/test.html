@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试thymeleaf页面模块是否可用</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>	
+
+
+<script type="text/javascript">
+    $(function(){
+        $('table tr').each(function(){
+            $(this).find('td:first').click(function(){
+                $(this).parent('tr').next('.box').show();    
+            });
+        });
+        $(document).click(function(e){
+            var target = $(e.target);
+            if(target.closest("table tr").length == 0){
+                $(".box").hide();
+            }
+        });
+    })
+</script>
+<table width="900" border="1">
+    <tr><td>IP</td><td>ICON</td><td>FPING</td><td>...</td></tr>
+    <tr class="box"><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><td>IP</td><td>ICON</td><td>FPING</td><td>...</td></tr>
+    <tr class="box"><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+</table>
+
+
+</head>
+<body>
+	<!-- 一个简单的thymeleaf语法th:text="${}" -->
+	<!-- <h2 th:text="${test}"></h2>
+	
+	<div shiro:hasPermission="user:add">
+		用户添加页面<a href="add">用户添加</a><br>
+	</div>
+	
+	<div shiro:hasPermission="user:update">
+		用户更新页面<a href="update">用户更新</a>
+	</div>
+	
+	<a href="toLogin">登录</a> -->
+	
+	<!--首先 加载jQuery-->
+
+<!-- 路径换成自己的路径-->
+
+
+
+<!--创建一个点击按钮-->
+
+
+<table id="mytable">
+       <tr id="myTr">
+            <td>
+                 第一行
+            </td>
+        </tr>
+        <tr id="myTr2">
+        	<!-- <td><button onclick="add()">+</button></td> -->
+        	<td><button onclick="add()">+</button></td>
+        </tr>
+        
+        <tr>
+        	<td>333</td>
+        </tr>
+</table>
+
+
+
+
+
+
+<!--创建一个表格-->
+
+<table border="2" id="qq1" class="table">
+<tr id="aa1"><th>姓名</th><th>年龄</th><th>性别</th></tr>
+<tr>
+<td>
+<button class="button" onclick="addrow()">添加一行</button>
+</td>
+</tr>
+<tr id="myTr2">
+        	<!-- <td><button onclick="add()">+</button></td> -->
+        	<td><button onclick="add()">+</button></td>
+        </tr>
+<tr id="zz1"><td>zuihouyihang </td></tr>
+</table>
+
+
+
+
+<table id="table1">
+
+　　<tr>
+
+　　　　<td>用户名:</td>
+
+　　　　<td><input type="text" name="username"></td>
+
+　　</tr>
+
+　　<tr>
+
+　　　　<td>密码:</td>
+
+　　　　<td><input type="text" name="password"></td>
+
+　　</tr>
+
+　　<tr>
+
+　　　　<td colspan=2>
+
+　　　　　　<input type="button" name="add" value="在密码行后添加一行" onclick="addTr()">
+
+　　　　</td>
+
+　　</tr>
+
+</table>
+
+ 
+
+
+
+<script>
+
+　　function addTr(){
+
+　　　　var tb=document.getElementById("table1");
+
+　　　　var newTr=tb.insertRow(2);//表示在第二行后添加一行
+
+　　　　var newTd=newTr.insertCell();//表示在添加的行上添加第一格
+
+　　　　newTd.innerHTML="邮箱:";
+
+　　　　var newTd2=newTr.insertCell();//表示在添加的行上添加第二格
+
+　　　　newTd.innerHTML="<input type='text' name='email' />";
+
+　　}
+
+</script>
+
+
+
+
+
+
+<!--创建添加行函数-->
+
+<script type="text/javascript">
+
+function addrow(){
+
+ /* var tables = $('.table #zz1'); */
+ var tables = $('.table');
+
+var addtr = $("<tr>"+
+"<td><input type='text' name='name' /></td>"+
+"<td><input type='text' name='age' /></td>"+
+"<td><input type='text' name='sex' /></td>"+
+"<td><span  onclick='deleteTrRow(this);'>&nbsp;删除</span></td>"+
+"</tr>");
+
+     addtr.appendTo(tables);     
+	//$('#qq1').append("<tr><td>---</td></tr>")
+
+}
+
+
+function add() {
+	//选取你的table，添加一行
+    $("#qq1").append("<tr><td>---</td></tr>")
+   /*  $("#myTr").parent().append("<tr>"+$("tr:first").html()+'</tr>') */
+}
+
+/* function deleteTrRow(tr){
+    //多一个parent就代表向前一个标签,
+    //本删除范围为<td><tr>两个标签,即向前两个parent
+    //如果多一个parent就会删除整个table
+    $(tr).parent().parent().remove();
+} */
+
+</script>
+	
+	
+	
+</body>
+</html>

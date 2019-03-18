@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fzy.mapper.ProInfoMapper">
+    
+    
+    <resultMap type="ProInfo" id="proinfo">
+        <id column="info_id" property="infoId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="project_name" property="projectName"/>
+        <result column="contract_number" property="contractNumber"/>
+        <result column="response_department" property="responseDepartment"/>
+        <result column="project_manager" property="projectManager"/>
+        <result column="project_money" property="projectMoney"/>
+        <result column="apply_date" property="applyDate"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="ref_id" property="refId"/>
+        <association property="infoPtype" javaType="com.fzy.domain.InfoPtype">
+            <id column="ptype_id" property="ptypeId"/>
+            <result column="project_type" property="projectType"/>
+        </association>
+        <association property="infoPform" javaType="com.fzy.domain.InfoPform">
+            <id column="pform_id" property="pformId"/>
+            <result column="project_form" property="projectForm"/>
+        </association>
+        <association property="infoSform" javaType="com.fzy.domain.InfoSform">
+            <id column="sform_id" property="sformId"/>
+            <result column="service_form" property="serviceForm"/>
+        </association>
+    </resultMap>
+    <sql id="pro-info">
+       ref_id,info_id,customer_name,project_name,contract_number,response_department,project_manager,project_money,apply_date,start_time,end_time
+       
+    </sql>
+    <sql id="pro-info2">
+       <!--  ref_id refId, -->
+        info_id infoId,
+        ref_id refId,
+        customer_name customerName,
+        project_name projectName,
+        contract_number contractNumber,
+        response_department responseDepartment,
+        project_manager projectManager,
+        project_money projectMoney,
+        apply_date applyDate,
+        start_time startTime,
+        end_time endTime
+    </sql>
+    <sql id="pro-info3">
+       info_id,customer_name,project_name,contract_number,response_department,project_manager,project_money,apply_date,start_time,end_time
+       
+    </sql>
+    <select id="findById" resultMap="proinfo" parameterType="int">
+        select
+        	<include refid="pro-info"></include>
+        from pro_info
+        where info_id = #{value}
+        	  <!-- is是关键词 -->
+    </select>
+    
+    <!-- <select id="findByRefId" resultMap="proinfo" parameterType="String">
+        select
+        	pi.ref_id refId,
+        	pi.ptype_id ptypeId,
+        	pi.pform_id pformId,
+        	pi.sform_id sformId,
+        	ipt.project_type projectType,
+        	ipf.project_form projectForm,
+        	isf.service_form serviceForm
+        	<include refid="pro-info2"></include>
+        from pro_info pi,info_ptype ipt,info_pform ipf,info_sform isf
+        where ref_id = #{value} and pi.ptype_id=ipt.ptype_id
+        	and pi.pform_id=ipf.pform_id and pi.sform_id=isf.sform_id
+        	  is是关键词
+    </select> -->
+    <!-- <select id="findByRefId" resultMap="proinfo" parameterType="String">
+        select
+        	pi.ref_id refId,
+        	pi.ptype_id ptypeId,
+        	pi.pform_id pformId,
+        	pi.sform_id sformId,
+        	ipt.project_type projectType,
+        	ipf.project_form projectForm,
+        	isf.service_form serviceForm,
+        	<include refid="pro-info2"></include>
+        from pro_info pi,info_ptype ipt,info_pform ipf,info_sform isf
+        where ref_id = #{value} and pi.ptype_id=ipt.ptype_id
+        	and pi.pform_id=ipf.pform_id and pi.sform_id=isf.sform_id
+        	  is是关键词
+    </select> -->
+    <select id="findByRefId" resultMap="proinfo" parameterType="String">
+        select
+        	pi.ref_id,
+        	pi.ptype_id,
+        	pi.pform_id,
+        	pi.sform_id,
+        	ipt.project_type,
+        	ipf.project_form,
+        	isf.service_form,
+        	<include refid="pro-info3"></include>
+        from pro_info pi,info_ptype ipt,info_pform ipf,info_sform isf
+        where ref_id = #{value} and pi.ptype_id=ipt.ptype_id
+        	and pi.pform_id=ipf.pform_id and pi.sform_id=isf.sform_id
+        	  <!-- is是关键词 -->
+    </select>
+    
+    <select id="findAll" resultType="ProInfo">
+        select
+        	<include refid="pro-info2"></include>
+        from pro_info
+    </select>
+    <!-- <insert id="insertProInfo" parameterType="ProInfo" userGeneratedKeys="true" keyProperty="infoId">
+        insert into pro_info(customer_name,project_name,contract_number,response_department,project_manager,project_money,apply_date,start_time,end_time) 
+        values(#{customerName},#{projectName},#{contractNumber},#{responseDepartment},#{projectManager},#{projectMoney},#{applyDate},#{startTime},#{endTime})
+    </insert> -->
+    <insert id="insertProInfo" parameterType="ProInfo" useGeneratedKeys="true" keyProperty="infoId">
+        insert into pro_info(ref_id,info_id,customer_name,project_name,contract_number,response_department,project_manager,project_money,apply_date,start_time,end_time,ptype_id,pform_id,sform_id) 
+        values(#{refId},#{infoId},#{customerName},#{projectName},#{contractNumber},#{responseDepartment},#{projectManager},#{projectMoney},#{applyDate},#{startTime},#{endTime},#{ptypeId},#{pformId},#{sformId})
+    </insert>
+    
+    <delete id="deleteProInfo" parameterType="string">
+        delete from pro_info where ref_id=#{value}
+    </delete>
+</mapper>

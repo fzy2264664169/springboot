@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 该文件存放CRUD的sql语句 -->
+<mapper namespace="com.fzy.mapper.UserMapper">			<!-- namespace:UserMapper.java的全限定类名 -->
+	<!-- id:接口方法名,parameterType:参数类型,resultType:方法返回类型 -->
+	<select id="findUserByName" parameterType="string" resultType="user">
+		select id,name,password
+			from user
+			where name = #{value}
+	</select>
+	
+	<select id="findUserById" parameterType="int" resultType="user">
+		select id,name,password,perms
+			from user
+			where id = #{value}
+	</select>
+</mapper>

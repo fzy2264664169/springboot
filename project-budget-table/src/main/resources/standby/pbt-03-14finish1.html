@@ -1,0 +1,1211 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>服务项目预算表——添加页面</title>
+
+<link rel="stylesheet" href="css/tabChange-transerse.css">
+
+<link rel="stylesheet" href="css/global.css" media="all">
+<link rel="stylesheet" href="css/boxy,jquery.fancybox-1.3.4.css">
+<link  href="css/aboutus.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/reg.css"  />
+<!-- jquery cleditor文本编辑器插件 -->
+<link rel="stylesheet" href="cleditor/jquery.cleditor.css" />
+<!-- <script>
+
+//外分包比例=外分包金额/项目标的（元）
+function subcontractRatio1() {
+var targetAccount1 = document.getElementById("targetAccount1").value;
+var epibolyAccount1 = document.getElementById("epibolyAccount1").value;
+if((targetAccount1 !== "") && (epibolyAccount1 !== "")) {
+  var subcontractRatio1 = $("#subcontractRatio1").val(epibolyAccount1/targetAccount1);
+  subcontractRatio1.push();
+}
+}
+
+//外部成本=外/分包金额+采购金额
+function externalCost1() {
+  var epibolyAccount1 = parseFloat($("#epibolyAccount1").val());
+  // console.log(epibolyAccount1);
+  var purchasingAmount1 = parseFloat($("#purchasingAmount1").val());
+  if((epibolyAccount1 !== "") && (purchasingAmount1 !== "")) {
+    var externalCost1 = $("#externalCost1").val(parseFloat(epibolyAccount1+purchasingAmount1));
+    externalCost1.push();
+  }
+}
+
+</script> -->
+<style type="text/css">
+.green{
+   background-color:green;
+}
+input{
+        border: none;
+        overflow: hidden;
+        height: 100%;
+        width: 100%;
+} 
+.radio{
+		height: auto;
+    width: auto;
+	}
+</style>
+
+</head>
+
+<body>
+<form id="pro-info" method="post">
+<table id="mytable99" style="border-collapse:collapse;" width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" class="cfuu">
+  <tr style="align-text: center;">
+    <th style="font-size:36px; color:red; text-align: center !important;" bgcolor="#99CC99" height="95" colspan="16" scope="row">
+    	<label>
+    		服务项目预算表
+    	</label>
+    </th>
+  </tr>
+<!--   <tr><td><input id="refId" name="refId" hidden="true"/></td></tr> -->
+  <tr>
+    <th width="125" height="49" scope="row">客户名称</th>
+    <td colspan="3"><input type="text" name="customerName" id="customerName"></td>
+    <td colspan="2">项目名称</td>
+    <td colspan="2"><input type="text" name="projectName"></td>
+    <td colspan="2">合同编号</td>
+    <td colspan="3"><input type="text" name="contractNumber"></td>
+    <td colspan="2">申请日期</td>
+    <td colspan="2">
+    	<!-- <input type="text" name="applyDate" id="time1"> -->
+    	<input name="applyDate" id="applyDate" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    </td>
+  </tr>
+  <tr>
+    <th height="81" scope="row">负责部门</th>
+    <td width="107"><input id="customer" type="text" name="responseDepartment"></td>
+    <td width="93">项目经理</td>
+    <td width="90"><input type="text" name="projectManager"></td>
+    <td colspan="2">项目标的（元）</td>
+    <td colspan="2"><input onchange="getSubcontractProportion123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()" id="projectMoney" type="text" name="projectMoney"></td>
+    <td colspan="2">项目类型</td>
+    <td colspan="3">
+    	<select name="projectType" id="projectType" class="input-txt">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+    </td>
+    <td colspan="2">项目性质</td>
+    <td colspan="2">
+    	<select name="projectForm" id="projectForm" class="input-txt">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+    </td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">服务形式</th>
+    <td colspan="3" align="center">
+		<select name="serviceForm" id="serviceForm" class="input-txt">
+            <option  value='0'>---请选择类别---</option>
+        </select>
+	</td>
+    <td colspan="2">服务或实施周期</td>
+    <td colspan="2">
+    	<!-- <input id="projectCircle1" type="text" name="" readonly="true"> -->
+    	<span name="time" id="time" class="input-txt"></span>
+    </td>
+    <td colspan="2">服务开始时间</td>
+    <td colspan="3">
+    	<!-- <input name="startTime" id="startTime1" onchange="projectCircle1();" type="text"> -->
+    	<input name="startTime" id="startTime" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    </td>
+    <td colspan="2">服务结束时间</td>
+    <td colspan="2" onclick="previous()">
+    	<!-- <input name="endTime" id="endTime1" onchange="projectCircle1();" type="text"> -->
+    	<input name="endTime" id="endTime" class="input-txt" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" value="" onchange=serviceCircle() />
+    </td>
+  </tr>
+
+</table>
+<table id="mytable00" style="border-collapse:collapse;" width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" class="cfuu00">
+  
+  
+  
+  <tr id="pp2">
+  	<!-- <th width="125" height="49" scope="row">客户名称</th> -->
+    <th width="125" height="49" id="pp3" rowspan="100" scope="row">
+    	项目人力成本及职责
+    	<!-- <br><span  onclick="addTr()">添加</span> -->
+    </th>
+    <td width="107" height="81" rowspan="2">职位</td>
+    <td width="93" rowspan="2">日均成本</td>
+    <td width="90" rowspan="2">姓名</td>
+    <td width="192" height="64" colspan="3">5*8项目（天）</td>
+    <td width="192" colspan="3">7*8项目（天）</td>
+    <td width="192" colspan="3">7*24项目（天）</td>
+    <td width="53" rowspan="2">合计天数</td>
+    <td width="85" rowspan="2">成本统计</td>
+    <td width="125" rowspan="2">项目职责备注</td>
+  </tr>
+  <tr id="pp3">
+    <td width="" height="81">日常</td>
+    <td width="">双休日</td>
+    <td width="">国定日</td>
+    <td width="">日常</td>
+    <td width="">双休日</td>
+    <td width="">国定日</td>
+    <td width="">日常</td>
+    <td width="">双休日</td>
+    <td width="">国定日</td>
+  </tr>
+  
+  
+
+  <tr id="pp4" class="pp4">
+    <td height="49" id="">
+    	<!-- <select name="servicerPosition" class="input-select servicerPosition" onchange="getCost()">
+            <option  value='0'>---请选择类别---</option>
+        </select> -->
+        <select name='servicerPosition' class='input-select servicerPosition'>
+        	<option value='0'>---请选择人员职位---</option>
+			<option value='初级工程师'>初级工程师</option>
+			<option value='工程师'>工程师</option>
+			<option value='高级工程师'>高级工程师</option>
+			<option value='资深工程师'>资深工程师</option>
+			<option value='首席工程师'>首席工程师</option>
+			<option value='初级项目经理'>初级项目经理</option> 
+			<option value='项目经理'>项目经理</option>
+			<option value='高级项目经理'>高级项目经理</option>
+			<option value='资深项目经理'>资深项目经理</option>
+		</select>
+        
+    </td>
+    <td>
+    	<!-- <select name="averageCost" id="averageCost" class="input-select averageCost">
+            <option  value='0'>---请选择类别---</option>
+        </select> -->
+        <select name='averageCost' class='input-select averageCost' onchange="getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()">
+        	<option value='0'>---请选择日均薪资---</option>
+        	<option value='300'>300</option>
+        	<option value='400'>400</option>
+        	<option value='600'>600</option>
+        	<option value='900'>900</option>
+        	<option value='1200'>1200</option>
+        	<option value='500'>500</option>
+        	<option value='700'>700</option>
+        	<option value='900'>900</option>
+        	<option value='1200'>1200</option>
+		</select>
+    </td>
+    <td><input type="text" name="servicerName" class="servicerName"></td>
+    <td><input type="text" name="everyday5" class="everyday5" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalEveryday5123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="weekendsday5" class="weekendsday5" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalWeekendsday5123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="nationalday5" class="nationalday5" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalNationalday5123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="everyday7" class="everyday7" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalEveryday7123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="weekendsday7" class="weekendsday7" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalWeekendsday7123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="nationalday7" class="nationalday7" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalNationalday7123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="everyday24" class="everyday24" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalEveryday24123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="weekendsday24" class="weekendsday24" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalWeekendsday24123();getTotalTotalDay123()"></td>
+    <td><input type="text" name="nationalday24" class="nationalday24" onchange="getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalNationalday24123();getTotalTotalDay123()"></td>
+    <td class="totalDay"></td>
+    <td class="costStatistics">
+    	<!-- <span class="costStatistics" onchange="getTotalCostStatistics123()"></span> -->
+   <!--  	<input readonly="readonly" class="costStatistics" onchange="getTotalCostStatistics123()"/> -->
+    </td>
+    <td><input type="text" name="dutyNote" class="dutyNote"></td>
+  </tr>
+  
+  
+  <tr id="zz1">
+    <td height="64" colspan="3">
+    	<span style="float: left" onclick="addTr()"><img src="images/+1.png"/></span>
+	    合计（天）：
+    </td>
+    <td id="totalEveryday5"></td>
+    <td id="totalWeekendsday5"></td>
+    <td id="totalNationalday5"></td>
+    <td id="totalEveryday7"></td>
+    <td id="totalWeekendsday7"></td>
+    <td id="totalNationalday7"></td>
+    <td id="totalEveryday24"></td>
+    <td id="totalWeekendsday24"></td>
+    <td id="totalNationalday24"></td>
+    <td id="totalTotalDay"></td>
+    <td colspan="2" class="totalCostStatistics" onchange="getOnchangeHtml()"></td>
+  </tr>
+</table>
+<table id="mytable77" style="border-collapse:collapse;" width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" class="cfuu"> 
+  
+  
+  
+<!-- <tr>
+	<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	<td></td><td></td><td></td><td></td><td></td><td></td>
+</tr> -->
+  
+  
+  <tr>
+    <th width="125" height="49" scope="row">项目外/分包</th>
+    <td width="107">外/分包内容</td>
+    <td width="184" colspan="2"><input class="input" type="text" name="subcontractContent"></td>
+    <td width="128" colspan="2">外/分包商信息</td>
+    <td width="194" colspan="3"><input class="input" type="text" name="subcontractMessage"></td>
+    <td width="128" colspan="2">外/分包比例</td>
+    <td width="128" colspan="2" id="subcontractProportion">
+    	<!-- <input id="subcontractRatio1" type="text" name="" readonly="true"> -->
+    </td>
+    <td width="53">外/分包金额</td>
+    <td width="210" colspan="2"><input onchange="getExternalCost123();getSubcontractProportion123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()" id="subcontractMoney" class="input" type="text" name="subcontractMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">项目采购</th>
+    <td>采购清单</td>
+    <td colspan="11"><input class="input" type="text" name="purchaseList"></td>
+    <td colspan="1">采购金额</td>
+    <td colspan="2"><input onchange="getExternalCost123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()" class="input" id="purchaseMoney" type="text" name="purchaseMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">耗材及零星采购</th>
+    <td>主要清单</td>
+    <td colspan="11"><input class="input" type="text" name="mainList"></td>
+    <td colspan="1">零星采购金额</td>
+    <td colspan="2"><input onchange="getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()" class="input" type="text" id="fragmentaryMoney" name="fragmentaryMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">项目费用</th>
+    <td>费用明细</td>
+    <td colspan="11"><input class="input" type="text" name="costBreakdown"></td>
+    <td colspan="1">费用金额</td>
+    <td colspan="2"><input onchange="getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()" class="input" type="text" id="costMoney" name="costMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">项目奖励</th>
+    <td>毛利</td>
+    <td colspan="11" id="grossMargin">
+    	<!-- <input  onchange=""/> -->
+    </td>
+    <td colspan="1">奖励金额</td>
+    <td colspan="2" id="bonusMoney"></td>
+  </tr>
+  <tr>
+    <th height="49" scope="row">成本汇总</th>
+    <td>外部成本</td>
+    <td colspan="2" onclick="getExternalCost123()" name="externalCost" id="externalCost">
+    	<!-- <input id="externalCost1" type="text" name="" readonly="true"> -->
+    	<!-- <span></span> -->
+    </td>
+    <td colspan="2">内部成本</td>
+    <td colspan="2" id="internalCost"></td>
+    <td colspan="2">合计</td>
+    <td colspan="2" id="summation"></td>
+    <td colspan="2">投入产出比</td>
+    <td colspan="2" id="inputOutputRatio"></td>
+  </tr>
+  
+  
+  
+  <tr>
+    <th height="72" scope="row">项目负责人意见</th>
+    <td align="center">
+						<input class="radio" type="radio" name="suggestion1" value="同意"><span>同意</span>
+						<input class="radio" type="radio" name="suggestion1" value="不同意" >不同意
+					</td>
+    <td>签名：</td>
+    <td colspan="2">
+    	<input class="input" type="text" name="principalName">
+    </td>
+    <td>日期：</td>
+    <td>
+    	<input name="principalDate" id="principalDate" class="input-date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    	<!-- <input class="input" type="text" name="principalDate"> -->
+    </td>
+    <td colspan="2">部门意见</td>
+    <td colspan="2" align="center">
+        <input class="radio" type="radio" name="suggestion2" value="同意">同意
+        <input class="radio" type="radio" name="suggestion2" value="不同意">不同意
+    </td>
+    <td>签名：</td>
+    <td>
+    	<input class="input" type="text" name="sectionName">
+    </td>
+    <td>日期：</td>
+    <td>
+        <input name="sectionDate" id="sectionDate" class="input-date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    	<!-- <input class="input" type="text" name="sectionDate"> -->
+    </td>
+  </tr>
+  
+  
+  
+  
+  <tr>
+    <th height="120" scope="row">S1服务管理中心意见</th>
+    <td align="center">
+						<input class="radio" type="radio" name="suggestion3" value="同意"><span>同意</span>
+						<input class="radio" type="radio" name="suggestion3" value="不同意">不同意
+					</td>
+    <td>签名：</td>
+    <td colspan="2">
+    	<input class="input" type="text" name="centerName">
+    </td>
+    <td>日期：</td>
+    <td>
+    	<input name="centerDate" id="centerDate" class="input-date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readOnly:true})" />
+    	<!-- <input class="input" type="text" name="centerDate"> -->
+    </td>
+    <td colspan="8" style="height: auto;margin-bottom: 10px;text-align: left !important;">备注：<br>
+      1、常驻服务项目，按合同规定的服务周期计算工作日（每年250工作日）；非常驻服务项目，按预计工作日计算。<br>
+      2、黄底色项有下拉菜单可选。“职位”中下拉列表中选择对应岗位，填写天数，即可自动计算。<br>
+      3、项目分包和项目采购，必须由询价组询价。<br>
+    4、对于到达符合发放项目奖励条件的服务项目，才予以奖励发放；未达到或不符合发放条件的，将进行相应扣除或取消奖励。具体详见《S1服务人员奖惩机制》。</td>
+  </tr>
+  
+  
+  <tr height="72px">
+  	<td colspan="16">
+        <!-- <button class="reg-login" type="button"  onclick="submitFunction1()">保存</button> -->
+        <!-- <button class="reg-login" type="button"  id="doSave">保存</button> -->
+        <button class="reg-login" type="button" onclick="submit2()">保存</button>
+        <!-- <input type="button" class="reg-login" onclick="submitFunction1()" value="保存"/> -->
+        <button class="reg-login" type="reset" value="重置">重置</button>
+    </td>
+  </tr>
+</table>
+</form>
+
+
+
+
+
+
+
+
+
+<!-- <script>
+//执行一个laydate实例
+laydate.render({
+  elem: '#time1' //指定元素
+});
+laydate.render({
+  elem: '#startTime1', //指定元素
+  done: function() {
+    projectCircle1();
+  }
+});
+laydate.render({
+  elem: '#endTime1', //指定元素
+  //choose: function(){ Day();},
+  // choose: function() { projectCircle1();}
+  done: function() {
+    projectCircle1();
+  }
+});
+
+</script> -->
+
+<script src="js/jquery.min.js"></script>
+<script src="js/tabChange-transerse.js"></script>
+
+<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script> 
+<!-- <script type="text/javascript" src="js/jquery.min.js"></script>   -->
+<!-- jquery cleditor文本编辑器插件 -->
+<script src="cleditor/jquery.cleditor.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#content").cleditor();
+        
+    });
+    
+    $(window).load(function() {
+    	$("#content").cleditor();
+    	getProjectType();
+    	getProjectForm();
+    	getServiceForm();
+   // 	getServicerPosition();
+   // 	getWorkType();
+  //  	getCost();
+    	//addTable();
+    	//getAverageCost();
+    	//getRefId();
+    });
+	
+    //refId请求页面时即已生成
+    function getRefId() {
+    	var id=$('#refId');
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getRefId",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result1=eval(data);
+    			$(result1).each(function(index) {
+    				var val=obj[index];
+    				$(id).append(
+    						"<input value='"+val.refId+"'/>"
+    						);
+    			});
+    			/* var result=data;
+    			$.each(result,function(i,value) {
+    				$(id).append(
+    					"<input value='"+refId+"'/>"		
+    				);
+    				var code = $("#refId").val();
+    		    	console.log(code);
+    			}); */
+    		}
+    	});
+    	/* var code = $("#refId").val();
+    	console.log(code); */
+    }
+    
+    function getProjectType() {
+        var which = $('#projectType');
+        $(which).empty();
+        $(which).append("<option value='0'>---请选择项目类别---</option>");
+        $.ajax({
+            type : 'POST',
+            url : "/getProjectType",
+            //              contentType:"application/json;charset=utf-8",
+            dataType : 'json',
+            //              data:'{"id":"1","memory_type":"asd"}',
+            success : function(data) {
+                var result = data;
+                //                  var notEmpty = data.notempty;                                            
+                $.each(result, function(i, value) {
+                    $(which).append(
+                            "<option value='"+value.ptypeId+"'>" + value.projectType
+                                    + "</option>");
+                    
+                    /* "<option value='"+value.id+"'>" + value.memory_type
+                    + "</option>"); */
+                });
+            }
+        });     
+        var code = $("#projectType option:selected").val();
+    	console.log(code);
+    }
+    
+    //获取project_form
+    function getProjectForm() {
+    	var which = $('#projectForm');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getProjectForm",
+    		dataType: 'json',
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.pformId+"'>" + value.projectForm + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    //获取service_form
+    function getServiceForm() {
+    	var which = $('#serviceForm');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择服务形式---</option>");
+    	$.ajax({
+    		type: "POST",
+    		url: "/getServiceForm",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.sformId+"'>" + value.serviceForm + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    //获取servicerPosition
+    function getServicerPosition() {
+    	var which = $('.servicerPosition');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择人员职位---</option>");
+    	$.ajax({
+    		type: "POST",
+    		url: "/getServicerPosition",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.spositionId+"'>" + value.servicerPosition + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	
+    	
+    }
+   
+    function getCost() {
+    	var code = $("#servicerPosition option:selected").val();
+    	console.log(code);
+    	
+    	var ac = $('.averageCost');
+    	$(ac).empty();
+    	$(ac).append("<option value='0'>---请选择日均薪资---</option>");
+    	//$(ac).append("<option value='0'>---请选择项目性质---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		//url: "/getServicerPosition2?id="+code,
+    		url: "/getServicerPosition",
+    		dataType: 'json',
+    		//data:{"content":content,"memoryId":memoryId},
+    	//	data: {"id":code},
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(ac).append(
+    	    				"<option value='"+value.spositionId+"'>" + value.averageCost + "</option>"		
+    	    			);
+    			});
+    			
+    		}
+    	});
+    	
+    	
+    }
+    
+    
+    //获取workType
+    function getWorkType() {
+    	var which = $('#workType');
+    	$(which).empty();
+    	$(which).append("<option value='0'>---请选择项目类型---</option>");
+    	$.ajax({
+    		type: 'POST',
+    		url: "/getWorkType",
+    		dataType: "json",
+    		success: function(data) {
+    			var result = data;
+    			$.each(result,function(i,value) {
+    				$(which).append(
+    					"<option value='"+value.wtypeId+"'>" + value.workType + "</option>"		
+    				);
+    			});
+    		}
+    	});
+    }
+    
+    function submitFunction1111111111() {
+    	//这里唯一需要注意的就是这个form-add的id
+    	var formData = new FormData($("#pro-info")[0]);
+    	console.log("000");
+    	$.ajax({
+    		url: '/insertProInfo',
+    		type: 'POST',
+    		data: formData,
+    		async: false,
+    		cache: false,
+    		contentType: false,
+    		processData: false,
+    		success: function(data) {
+    			if(data.code == 300){
+    				
+    			}
+    		},
+    		error: function(returndata) {
+    			
+    		}
+    	});
+    	/* window.location.href='/displayIndex'; */
+    	/* window.location.href="/url?r="+t.getTime(); */
+    }
+    
+    
+    //未输入开始时间，就点击了结束时间
+    function previous() {
+    	var st = $("#startTime").val();
+    	console.log(st);
+    	if(st==null)
+    		alert("请先输入开始时间，再输入结束时间！");
+    }
+    //服务周期time=endTime-startTime
+    function serviceCircle() {
+    	var startTime = $('#startTime').val();
+    	var endTime = $('#endTime').val();
+    	if(startTime == 0 || startTime == null) {
+    		alert("请先输入开始时间");
+    	}
+    	else if(endTime == 0 || endTime == null){
+    			alert("请输入结束时间");
+    		}
+    	else if((startTime != "") && (endTime != "")) {
+    		var st = new Date(startTime);
+    		var et = new Date(endTime);
+    		var s = st.getTime();
+    		var e = et.getTime();
+    		var timeSecond = (e-s)/1000;
+    		var timeDay = parseInt(timeSecond/(60*60*24));
+    		var timeMonth = timeDay/30;
+    		var timeYear = timeDay/365;
+    		var timeHour = (timeSecond - timeDay*24*60*60)/(60*60);
+    		var timeHourRound = Math.round(timeHour);
+    		/* if(timeHourRound=24) {
+    			timeDay+=1;
+    			timeHourRound=0;
+    		} */
+    		
+    		var time = $('#time').html(timeDay + '天' + timeHourRound + '时');
+        	console.log(time);
+        	time.push();
+    	}
+    	/* var time = $('#time').html(timeDay + '天' + timeHourRound + '时');
+    	console.log(time);
+    	time.push(); */
+    }
+    
+  //0、外/分包比例=外/分包金额   / 项目金额           subcontractProportion=subcontractMoney/projectMoney
+  	function getSubcontractProportion123() {
+	  //alert("gr");
+	  var pro = $("#projectMoney").val();
+	  var sub = $("#subcontractMoney").val();
+	  var pro1 = Number(pro);
+	  var sub1 = Number(sub);
+	  var subp1 = pro1/sub1;
+	  if(sub1 != 0){
+		  var subp = $("#subcontractProportion").html(sub1/pro1);
+	  }
+	  
+  }
+    
+    
+  //1、外部成本=外/分包金额+采购金额          externalCost=subcontractMoney+purchaseMoney
+	function getExternalCost123() {
+		var sub = $("#subcontractMoney").val();
+		var pur = $("#purchaseMoney").val();
+		var ext = Number(sub) + Number(pur);
+	//	var ext = $("#externalCost").val($("#subcontractMoney").val()+$("purchaseMoney").val());
+		var ext1 = $("#externalCost").html(ext)
+		//ext.push();
+	}
+  //2、合计天数=日常+双休日+国定日  totalDay=everyday5+weekendsday5+nationalday5+everyday7+weekendsday7+nationalday7+everyday24+weekendsday24+nationalday24
+  function getTotalDay123() {
+	  
+	  var which = $("#mytable00 tbody tr:not(:last)");
+	  $(which).each(function(i,e) {
+		  if(i>1) {
+			  var arr = [];
+			  var a = 0;
+			  $(e).find("input").each(function(ii,ee) {
+				  var inputs = $(ee);
+				  arr[ii] = inputs.val();
+				  a += Number(arr[ii]);
+			  });
+		//	  alert(a);
+			  $(e).find(".totalDay").html(a);
+		  }
+	  });
+	  
+	  /* var eve5 = $(".everyday5").val();
+	  var wee5 = $(".weekendsday5").val();
+	  var nat5 = $(".nationalday5").val();
+	  var eve7 = $(".everyday7").val();
+	  var wee7 = $(".weekendsday7").val();
+	  var nat7 = $(".nationalday7").val();
+	  var eve24 = $(".everyday24").val();
+	  var wee24 = $(".weekendsday24").val();
+	  var nat24 = $(".nationalday24").val();
+	  var tot1 = Number(eve5)+Number(wee5)+Number(nat5)+Number(eve7)+Number(wee7)+Number(nat7)+Number(eve24)+Number(wee24)+Number(nat24);
+	  var tot2 = $(".totalDay").html(tot1); */
+  }
+  //3、成本统计=日均成本*日常+日均成本*2*双休日+日均成本*3*国定日    costStatistics=
+  function getCostStatistics123() {
+	  
+	  var which = $("#mytable00 tbody tr:not(:last)");
+//	  alert("dddd")
+	  $(which).each(function(i,e) {
+		  if(i>1) {
+//			  alert(i);
+			  var arr = new Array();
+			  var a = 0;
+			  var ave = $(e).find(".averageCost").val();
+			  $(e).find("input").each(function(ii,ee) {
+	//			  debugger
+				  var inputs = $(ee);
+				  arr[ii] = $(ee).val();
+			//	  a = Number(arr[0])*(Number(arr[1])+Number(arr[2])*2+Number(arr[3])*3+arr[4]+Number(arr[5])*2+Number(arr[6])*3+arr[7]+Number(arr[8])*2+Number(arr[9])*3));
+				  var temp = Number(arr[1]) +Number(arr[2])*2+Number(arr[3])*3+Number(arr[4])+Number(arr[5])*2+Number(arr[6])*3+Number(arr[7])+Number(arr[8])*2+Number(arr[9])*3;
+				  a = Number(ave)*(Number(arr[1])+Number(arr[2])*2+Number(arr[3])*3+Number(arr[4])+Number(arr[5])*2+Number(arr[6])*3+Number(arr[7])+Number(arr[8])*2+Number(arr[9])*3);
+			  });
+			  /* var temp = Number(arr[1]) +Number(arr[2])*2+Number(arr[3])*3+Number(arr[4])+Number(arr[5])*2+Number(arr[6])*3+Number(arr[7])+Number(arr[8])*2+Number(arr[9])*3;
+			  a = Number(ave)*(Number(arr[1])+Number(arr[2])*2+Number(arr[3])*3+Number(arr[4])+Number(arr[5])*2+Number(arr[6])*3+Number(arr[7])+Number(arr[8])*2+Number(arr[9])*3); */
+			  $(e).find(".costStatistics").html(a);
+		  }
+	  });
+	  
+	/*   var ave = $(".averageCost").val();
+	  var eve5 = $(".everyday5").val();
+	  var wee5 = $(".weekendsday5").val();
+	  var nat5 = $(".nationalday5").val();
+	  var eve7 = $(".everyday7").val();
+	  var wee7 = $(".weekendsday7").val();
+	  var nat7 = $(".nationalday7").val();
+	  var eve24 = $(".everyday24").val();
+	  var wee24 = $(".weekendsday24").val();
+	  var nat24 = $(".nationalday24").val();
+	  
+	  //var cos1 = Number(ave)*Number(eve5)+Number(ave)*2*Number(wee5)+Number(ave)*3*Number(nat5);
+	  var cos1 = Number(ave)*(Number(eve5)+Number(wee5)*2+Number(nat5)*3+Number(eve7)+Number(wee7)*2+Number(nat7)*3+Number(eve24)+Number(wee24)*2+Number(nat24)*3);
+	  // var cos2 = $(".costStatistics").html(cos1);
+	  // var cos2 = $(".costStatistics").val(Number(cos1));
+	  var cos2 = $(".costStatistics").val(cos1);
+	  var cos2 = $(".costStatistics").html(cos1); */
+  }
+  //4、合计成本统计=sum(成本统计)    totalCostStatistics=sum(costStatistics)
+  function getTotalCostStatistics123() {
+//	  getCostStatistics123();
+//	  alert("成本统计");
+	  var tss = [];
+	  var a = 0;
+	  $(".costStatistics").each(function(i,e) {
+		  tss[i] = $(this).text();
+		  a += Number(tss[i]);
+	  });
+//	  alert(a);
+	  $(".totalCostStatistics").html(a);
+	  /* var cos = $(".costStatistics").text();
+	  var tot = $(".totalCostStatistics").html(cos); */
+  }
+  
+  //测试html数值变化能不能检测到   ==  验证结果，可以取到（但无法直接取，需从引起其变化的位置取）
+  function getOnchangeHtml() {
+	  var tot = $(".totalCostStatistics").text();
+	  alert(tot);
+  }
+  
+  //5、毛利=项目金额-合计成本统计-外/分包金额-采购金额-零星采购金额-费用金额
+  //grossMargin=projectMoney-totalCostStatistics-subcontractMoney-purchaseMoney-fragmentaryMoney-costMoney
+  function getGrossMargin123() {
+	  var pro = $("#projectMoney").val();
+	  var tot = $(".totalCostStatistics").text();
+	  //alert(tot);
+	  var sub = $("#subcontractMoney").val();
+	  var pur = $("#purchaseMoney").val();
+	  var fra = $("#fragmentaryMoney").val();
+	  var cos = $("#costMoney").val();
+	  var gro = $("#grossMargin").html(Number(pro)-Number(tot)-Number(sub)-Number(pur)-Number(fra)-Number(cos));
+  }
+  //6、奖励金额=毛利*0.02
+  function getBonusMoney123() {
+	  var gro = $("#grossMargin").text();
+	  var bon = $("#bonusMoney").html(Number(gro)*0.02);
+  }
+  //7、内部成本=合计统计成本+零星采购金额+费用金额+奖励金额
+  function getInternalCost123() {
+	  var tot = $(".totalCostStatistics").text();
+	  //alert(tot);
+	  var fra = $("#fragmentaryMoney").val();
+	  var cos = $("#costMoney").val();
+	  var bon = $("#bonusMoney").text();
+	  var intcos = $("#internalCost").html(Number(tot)+Number(fra)+Number(cos)+Number(bon));
+	  //alert(intcos);
+  }
+  //8、合计=外部成本+内部成本
+  function getSummation123() {
+	  var ext = $("#externalCost").text();
+	  var intcos = $("#internalCost").text();
+	  var sum = $("#summation").html(Number(ext)+Number(intcos));
+  }
+  //9、投入产出比=项目金额/合计
+  function getInputOutputRatio() {
+	  var pro = $("#projectMoney").val();
+	  var sum = $("#summation").text();
+	  var pro1 = Number(pro);
+	  var sum1 = Number(sum);
+	  var ior1 = pro1/sum1;
+	  if(isFinite(ior1)) {
+		  var ior = $("#inputOutputRatio").html(ior1);
+	  }
+  }
+  
+  //10、合计（天）
+  //totalEveryday5
+  function getTotalEveryday5123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".everyday5").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te5 = $("#totalEveryday5").html(a);
+  }
+//totalWeekendsday5
+  function getTotalWeekendsday5123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".weekendsday5").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te5 = $("#totalWeekendsday5").html(a);
+  }
+//totalNationalday5
+  function getTotalNationalday5123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".nationalday5").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te5 = $("#totalNationalday5").html(a);
+  }
+  
+  //totalEveryday7
+  function getTotalEveryday7123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".everyday7").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te7 = $("#totalEveryday7").html(a);
+  }
+//totalWeekendsday7
+  function getTotalWeekendsday7123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".weekendsday7").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te7 = $("#totalWeekendsday7").html(a);
+  }
+//totalNationalday7
+  function getTotalNationalday7123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".nationalday7").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te7 = $("#totalNationalday7").html(a);
+  }
+  
+  //totalEveryday24
+  function getTotalEveryday24123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".everyday24").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te24 = $("#totalEveryday24").html(a);
+  }
+//totalWeekendsday24
+  function getTotalWeekendsday24123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".weekendsday24").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te24 = $("#totalWeekendsday24").html(a);
+  }
+//totalNationalday24
+  function getTotalNationalday24123() {
+	  var arr = new Array();
+	  var a=0;
+	  $(".nationalday24").each(function(index,item) {
+		  arr[index] = $(this).val();
+		  a += Number(arr[index]);
+	  });
+	  var te24 = $("#totalNationalday24").html(a);
+  }
+  
+  //11、合计（天）合计天数=totalEveryday5+....
+  function getTotalTotalDay123() {
+	  var eve5 = $("#totalEveryday5").text();
+	  var wee5 = $("#totalWeekendsday5").text();
+	  var nat5 = $("#totalNationalday5").text();
+	  var eve7 = $("#totalEveryday7").text();
+	  var wee7 = $("#totalWeekendsday7").text();
+	  var nat7 = $("#totalNationalday7").text();
+	  var eve24 = $("#totalEveryday24").text();
+	  var wee24 = $("#totalWeekendsday24").text();
+	  var nat24 = $("#totalNationalday24").text();
+	  
+	  var totot = $("#totalTotalDay").html(Number(eve5)+Number(wee5)+Number(nat5)+Number(eve7)+Number(wee7)+Number(nat7)+Number(eve24)+Number(wee24)+Number(nat24));
+  }
+	
+    
+    
+
+    function addTr(){
+
+var ww = $("tr:eq(6)").html();
+//console.log(ww);
+	var tb=document.getElementById("mytable00");
+    var t1=tb.insertRow(2);
+    t1.setAttribute("class", "pp4");
+  t1.innerHTML="<tr class='pp0'><td class='td2' height='49'>" + 
+  "<select name='servicerPosition' class='input-select servicerPosition'>" +
+  "<option value='0'>---请选择人员职位---</option>" + 
+  "<option value='初级工程师'>初级工程师</option>" + 
+  "<option value='工程师'>工程师</option>" + 
+  "<option value='高级工程师'>高级工程师</option>" + 
+  "<option value='资深工程师'>资深工程师</option>" + 
+  "<option value='首席工程师'>首席工程师</option>" + 
+  "<option value='初级项目经理'>初级项目经理</option>" + 
+  "<option value='项目经理'>项目经理</option>" + 
+  "<option value='高级项目经理'>高级项目经理</option>" + 
+  "<option value='资深项目经理'>资深项目经理</option></select></td>" + 
+  "<td><select name='averageCost' class='input-select averageCost' onchange='getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio()'>" + 
+  "<option value='0'>---请选择日均薪资---</option>" + 
+  "<option value='300'>300</option>" + 
+  "<option value='400'>400</option>" + 
+  "<option value='600'>600</option>" + 
+  "<option value='900'>900</option>" + 
+  "<option value='1200'>1200</option>" + 
+  "<option value='500'>500</option>" + 
+  "<option value='700'>700</option>" + 
+  "<option value='900'>900</option>" + 
+  "<option value='1200'>1200</option></select></td>" + 
+  "<td><input type='text' name='servicerName'></td>" + 
+  "<td><input type='text' name='everyday5' class='everyday5' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalEveryday5123();getTotalTotalDay123()'></td>" + 
+  "<td><input type='text' name='weekendsday5' class='weekendsday5' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalWeekendsday5123();getTotalTotalDay123()'></td>" + 
+  "<td><input type='text' name='nationalday5' class='nationalday5' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalNationalday5123();getTotalTotalDay123()'></td>" +
+  "<td><input type='text' name='everyday7' class='everyday7' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalEveryday7123();getTotalTotalDay123()'></td>" + 
+  "<td><input type='text' name='weekendsday7' class='weekendsday7' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalWeekendsday7123();getTotalTotalDay123()'></td>" + 
+  "<td><input type='text' name='nationalday7' class='nationalday7' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalNationalday7123();getTotalTotalDay123()'></td>" +
+  "<td><input type='text' name='everyday24' class='everyday24' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalEveryday24123();getTotalTotalDay123()'></td>" + 
+  "<td><input type='text' name='weekendsday24' class='weekendsday24' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalWeekendsday24123();getTotalTotalDay123()'></td>" + 
+  "<td><input type='text' name='nationalday24' class='nationalday24' onchange='getTotalDay123();getCostStatistics123();getTotalCostStatistics123();getGrossMargin123();getBonusMoney123();getInternalCost123();getSummation123();getInputOutputRatio();getTotalNationalday24123();getTotalTotalDay123()'></td>" + 
+  "<td class='totalDay'></td><td class='costStatistics'></td>" + 
+  "<td><input type='text' name='dutyNote'></td></tr>";  
+ }
+	
+//JSON字符串转换JSON对象
+var a = JSON.parse("{\"title\":\"\",\"data\":[]}");	
+ 
+function getProInfo() {
+	var array = new Array();
+	//debugger
+	var which = $("#mytable99 tbody tr");
+	var row = {};
+	$(which).find("input,select").each(function(ii,ee) {
+		
+		 var inputs = $(ee);
+		 var obj = {};
+		 obj = inputs.val();
+		 row[inputs.attr("name")] = obj;
+	});
+	a.data.push(row);
+	console.log("json1111111:"+JSON.stringify(row));
+	return JSON.stringify(a);
+}
+
+	function getProCost() {
+		var arr = new Array();
+		var row = {};
+		which = $("#mytable77 tbody tr");
+		$(which).find("input.input").each(function(i,e) {
+			//debugger
+			var inputs = $(e);
+			var obj = {};
+			obj = inputs.val();
+			console.log("inputs.val:"+obj)
+			row[inputs.attr("name")] = obj;
+			
+		});
+		a.data.push(row);
+		console.log("json222222222:"+JSON.stringify(row));
+		return JSON.stringify(a);
+	}
+	
+	function getRadioValue() {
+		var arr = new Array();
+		var row = {};
+		
+		/* var radioName = $("input[name='suggestion1']:checked")[0].nextSibling.nodeValue;
+		alert(radioName+"00"); */
+		
+		
+		$(which).find("input.radio:checked").each(function(i,e) {
+			var inputs = $(e);
+			var obj = {};
+			obj = inputs.val();
+			console.log("000000001233333333333:"+obj);
+			row[inputs.attr("name")] = obj;
+		});
+		a.data.push(row);
+		console.log("json666666666:"+JSON.stringify(a))
+		return JSON.stringify(a);
+	}
+ 
+ 
+ 
+	function getJson() {
+		var arr = new Array();
+		// 遍历table表格多个数据 这里加 tbody 去掉table的标题栏，否则会用空行数据     tr:not(:first):not(:last)
+		var which =$("#mytable00 tbody tr:not(:last)");
+		which.each(function (i, e) {//每一行,选择器自己修改
+			// 遍历每一行
+			// 封装对象
+			
+			if(i>1){
+				console.log(i);
+			
+			var row = {};
+		//	$(".pp4").each(function (ii, ee) {//每行里面需要提交的数据 遍历每一行的数据 寻找每一行内的标签
+								//只取第一个select   $(e).find("input,select:first").each
+			$(e).find("input,select").each(function (ii, ee) {//每行里面需要提交的数据 遍历每一行的数据 寻找每一行内的标签
+				//var PayObj=new Object();
+				var inputs = $(ee);
+				var obj = {}
+			/* 	tr.find("option:selected").each(function(i,e){
+					//debugger
+					obj[$(e).attr("name")] = e.value;
+				})
+				alert(JSON.stringify(obj))
+				return;
+				var obj = {}; */
+				// inpputs.val 每一行的数据
+				obj = inputs.val();
+				// 截断字符串 取每一行的属性name名字
+				var sliceStr = inputs.attr("name");
+				console.log("sliceStr:"+sliceStr);
+				if(sliceStr != undefined && sliceStr != 'undefined' && sliceStr  != null){
+					
+					var PayObj=new Object();
+					
+					// 寻找每一行的数据的属性 因为每行的name属性 如 同一个属性 属性name名多条数据是多个 late_charge_rate1 late_charge_rate2
+					if(sliceStr.substring(0,sliceStr.length) == 'servicerPosition'){
+						PayObj.servicerPosition = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'averageCost'){
+						PayObj.averageCost = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'servicerName'){
+						PayObj.servicerName = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'everyday5'){
+						PayObj.everyday5 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'weekendsday5'){
+						PayObj.weekendsday5 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'nationalday5'){
+						PayObj.nationalday5 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'everyday7'){
+						PayObj.everyday7 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'weekendsday7'){
+						PayObj.weekendsday7 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'nationalday7'){
+						PayObj.nationalday7 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'everyday24'){
+						PayObj.everyday24 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'weekendsday24'){
+						PayObj.weekendsday24 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'nationalday24'){
+						PayObj.nationalday24 = inputs.val();
+					} else if(sliceStr.substring(0,sliceStr.length) == 'dutyNote'){
+						PayObj.dutyNote = inputs.val();
+					}
+					
+				}
+				row[inputs.attr("name")] = obj;
+	
+				//a.data.push(PayObj);
+				//a.data=arr;
+			});
+			a.data.push(row)
+		//	arr.push(row);
+			console.log("arr:"+a);
+	}
+		});
+		
+		
+		
+		
+		var which1 = $("#mytable99 tbody tr");
+		var row1 = {};
+		$(which1).find("input,select").each(function(ii,ee) {
+			
+			 var inputs1 = $(ee);
+			 var obj1 = {};
+			 obj1 = inputs1.val();
+			 row1[inputs1.attr("name")] = obj1;
+		});
+		a.data.push(row1);
+		
+			var row2 = {};
+			which2 = $("#pro-info #mytable77 tbody tr");
+			//$(which2).find("input.input"+"input.radio:checked").each(function(i,e) {
+			$(which2).find("input.input-date,input.radio:checked,input.input").each(function(i,e) {
+				//debugger
+				var inputs2 = $(e);
+				var obj2 = {};
+				obj2 = inputs2.val();
+				console.log("inputs2.val:"+obj2)
+				row2[inputs2.attr("name")] = obj2;
+				
+			});
+			a.data.push(row2);
+			
+			
+			/* var radioName = $("input[name='suggestion1']:checked")[0].nextSibling.nodeValue;
+			alert(radioName+"00"); */
+/*  			var row3 = {};
+			var which3 = $("#pro-info")
+			$(which3).find("input.radio:checked").each(function(i,e) {
+				var inputs3 = $(e);
+				var obj3 = {};
+				obj3 = inputs3.val();
+				console.log("000000001233333333333:"+obj3);
+				row3[inputs3.attr("name")] = obj3;
+			});
+			a.data.push(row3);
+			 */
+			
+		
+		// 格式化数据 JSON对象转化为JSON字符串
+		return JSON.stringify(a);
+		
+		
+	}
+ 
+ 
+ function submit2() {
+	//	var s=getJson()+getProInfo()+getProCost()+getRadioValue();
+		var s=getJson();
+		
+		console.log("s.getJson:"+s)
+		//异步请求
+		$.ajax({
+            url: "/insertProInfo",
+            type: "post",
+            //data: {'param': radioValue,proCost,proInfo,s},//参数
+            data: {'param': s},//参数
+      //      data: {'param': s},//参数
+            datatype: "json",
+            cache: 'false',
+            success: function (data) {
+              //  var obj = eval("(" + data + ")");
+                var obj = eval(data);
+                if (obj.success) {
+                    mini.unmask();
+                    alert(obj.message);
+                    
+                    location.reload();
+                }
+                else {
+                    mini.unmask();
+                    alert(obj.message);
+                }
+            }
+        });
+		
+		window.location.href='/pbt-list';
+		
+ }
+    
+</script> 
+	
+	
+</body>
+</html>
