@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>测试thymeleaf页面模块是否可用</title>
+</head>
+<body>
+	<!-- 一个简单的thymeleaf语法th:text="${}" -->
+	<h2 th:text="${test}"></h2>
+	
+	<div shiro:hasPermission="user:add">
+		用户添加页面<a href="add">用户添加</a><br>
+	</div>
+	
+	<div shiro:hasPermission="user:update">
+		用户更新页面<a href="update">用户更新</a>
+	</div>
+	
+	<a href="toLogin">登录</a>
+</body>
+</html>

@@ -1,0 +1,16 @@
+#在application.yml 文件书写注意：
+#1. 不同“等级” 用冒号隔开
+#2. 次等级的前面是空格，不能使用制表符(tab)
+#3. 冒号之后如果有值，那么冒号和值之间至少有一个空格，不能紧贴着
+spring:
+    datasource:
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/springboot
+        username: root
+        password: 123456
+        type: com.alibaba.druid.pool.DruidDataSource
+    profiles:
+        active: pro
+mybatis:
+    type-aliases-package: com.fzy.domain
+#要么用application.properties 要么用 application.yml，不要都用，不要折磨Springboot和自己

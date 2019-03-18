@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>400-登录页面</title>
+
+
+<!-- 	3、背景图片的自适应
+使背景图不拉伸
+为了解决背景图片在分辨率不同的情况下会变形的问题，引入了如下插件: jqthumbnail.js-->
+
+	<script src="js/jquery3.3.1/jquery-3.3.1.min.js"></script>
+	<script src="js/thumbnailPlugin1.9.3/jqthumb.min.js"></script>
+
+
+	<script type="text/javascript">
+		// 背景图片的不拉伸自适应
+	    function autoSizeBacgroundImage() {
+	        $('#background img').jqthumb({
+	        	// 瑕疵：宽高都有滚动条显示
+	            width: window.innerWidth,
+	            height: window.innerHeight,
+	            // width: $(window).width(),
+	            // width: $(window).height(),
+	            after: function (imgObj) {
+	                imgObj.css('opacity', 0).animate({opacity: 1}, 2000);
+	            }
+	        });
+	    }
+/*	    4、窗口改变时，改变背景图片大小，以适应窗口
+我们使用如下函数来使得图片大小能够随着窗口的改变而改变*/
+	    // 当窗口改变时调用自适应函数
+	    $(function () {
+	        $(window).resize();
+	    });
+	    $(window).resize(function () {
+	        autoSizeBacgroundImage()
+	    });
+
+/*	    7、#图片轮换
+获取随机图片
+为了达到背景图片随机切换的效果，使用了随机函数来生成一个随机整数以获取随机图片。
+
+生成一个随机数，我们可以对多张背景图进行排序并编号，结合获取到的随机数即可达到获取随机图片地址的效果。*/
+		// 从任意值开始 至 任意值
+		//parseInt(Math.random()*(上限-下限+1)+下限);
+		/*var imageNumber = parseInt(Math.random() * (imageMax - imageMin + 1) + imageMin);*/
+
+		// 8、将获取到的地址显示到页面上，并调用图片自适应函数刷新背景图片。
+		/*$('#background img').attr("src", url);
+        autoSizeBacgroundImage()*/
+
+        /*图片轮换，显示随机图片
+我们使用了Jquery的定时循环执行器setInterval()来达到定时更换背景图的效果*/
+        //图片轮换
+	    setInterval(function () {
+	        //随机取一张图片
+	        var imageMax = 3;
+	        var imageMin = 1;
+	        // 从任意值开始 至 任意值
+	        //parseInt(Math.random()*(上限-下限+1)+下限);
+	        var imageNumber = parseInt(Math.random() * (imageMax - imageMin + 1) + imageMin);
+	        var oldUrl = $('#background img').attr("src");
+	        var newUrl = "images" + "/background" + imageNumber + ".jpg";
+	        console.log(imageNumber);
+	        //截取旧地址的前半部分，加上随机地址的后半部分，得到一个新地址
+	        var url = oldUrl.split("background")[0] + "background" + newUrl.split("background")[1];
+	        $('#background img').attr("src", url);
+	        autoSizeBacgroundImage()
+
+	        // $("#background img").fadeIn(200).siblings("#background img").fadeOut(200);
+	    }, 5000);
+
+
+
+    </script>
+
+
+	<style type="text/css">
+
+		/*5、去除滚动条*/
+		html {
+		  /*这是为了兼容ie8，不支持:root, vw*/
+		  overflow-y: scroll; 
+		}
+
+		:root {
+		  /*y轴滚动条自动配置*/
+		  /*overflow-y: auto;*/
+		  overflow: hidden;
+		  /*x轴滚动条隐藏*/
+		  /*overflow-x: hidden;*/
+		}
+
+		/*会导致背景图片上的内容不显示
+			不加会导致背景图片在浏览器左、上方有白边
+			白边是因为body默认的内外补丁的关系,可以加一个样式解决
+		*/
+		:root body {
+		  /*position: absolute;*/
+		  /*position: relative;*/
+		}
+		/*6、去白边*/
+		html, body { margin:0; padding:0; }
+
+		body {
+		  width: 100vw;
+		  /*隐藏body内容*/
+		  /*overflow: hidden;*/
+		}
+
+
+		/*2、使用绝对定位来布局：浏览器窗口改变，登录面板大小不变*/
+		/*登录框距离顶部50%，距离左侧50%，“margin-top: -230px;”表示登录面板上移自身高度的一半，以达到居中效果。使用“z-index: -1;”使输入面板覆盖在背景div的层上。*/
+        .loginForm {
+            top: 50%;
+            left: 50%;
+            margin-top: -230px;
+            margin-right: -200px;
+            position: absolute;
+        }
+
+        #background {
+            position: absolute;
+            z-index: -1;
+        }
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.section{
+    margin: 100px auto;
+    width: 472px;
+    height: 422px;
+    background-color: #39a6eb;
+    padding: 8px 10px;
+    font-family: "Microsoft YaHei";
+}
+.all{
+    width: 450px;
+    height: 405px;
+}
+.nav{
+    height: 50px;
+}
+.nav>a{
+    padding: 0 15px;
+    width: 225px;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+}
+.nav>a[class="on-2-login"]{
+    background-color: #89caf4;
+    border-bottom: 1px solid #eee;
+}
+.login{
+    background-color: #89caf4;
+}
+.login.on{
+    background-color: #e1f2fc;
+}
+.contentbox{
+    width: 450px;
+}
+.cont-1>input{
+    width: 350px;
+    height: 46px;
+    border: 1px solid #c6cddc;
+}
+.email{
+    background-image: url("../img/img1-coin1_03.png");
+    background-repeat: no-repeat;
+    background-position: 3px 0px;
+}
+.password{
+    background-image: url("../img/img1-coin2_03.png");
+    background-repeat: no-repeat;
+}
+.cont-1>input{
+    line-height: 46px;
+    padding-left: 40px;
+}
+.cont-1>input[name="txt"]{
+    margin-top: 35px;
+}
+.cont-1>input[name="psd"]{
+    margin-top: 17px;
+}
+.verify{
+    margin: 0 auto;
+    width: 352px;
+    height: 40px;
+    margin-top: 16px;
+    border: 1px solid #c4cbd1;
+    text-align: center;
+    line-height: 40px;
+    font-size: 12px;
+    color: #b9bbb8;
+    border-radius: 20px;
+    position: relative;
+    z-index: 2;
+    behavior: url(PIE.htc);
+}
+.verify:hover{
+    cursor: pointer;
+}
+.btn{
+    width: 350px;
+    height: 44px;
+    background-color: #39a6eb;
+    margin-top: 30px;
+    font-size: 18px;
+    color: #fff;
+}
+.btn:hover{
+    background-color: rgba(121,177,212,0.9);
+}
+.about{
+    width: 350px;
+    height: 26px;
+    font-size: 14px;
+    margin: 0 auto;
+    margin-top: 46px;
+}
+.about>a{
+    text-decoration: none;
+    color: #4e6d99;
+}
+.about>a>span{
+    width: 1px;
+    height: 12px;
+    display: inline-block;
+    border: 1px solid #ccd2d0;
+}
+/*cont:2*/
+.cont-2>.text{
+    margin: 0 auto;
+    width: 350px;
+    height: 30px;
+    font-size: 15px;
+    display: inline-block;
+    margin-top: 30px;
+}
+.cont-2>.text>a{
+    text-decoration: none;
+    color: #4174a9;
+    font-weight: bold;
+}
+.cont-2>img{
+    margin-top: 12px;
+}
+.contentbox>div{
+    width: 450px;
+    height: 355px;
+    text-align: center;
+    display: none;
+    background-color: #e1f2fc;
+}
+.cont-2>.about{
+    margin-top: 54px;
+}
+.contentbox>div[class="box active"]{
+    display: block;
+}
+/*这是低端浏览器下placeholder的字体颜色*/
+.cont-1>input{
+    color: #bfbfbf;
+}
+/*这是firefox下placeholder的字体颜色*/
+.cont-1>input::-moz-placeholder {
+    color: #bfbfbf;
+}
+/*这是webkit下placeholder的字体颜色*/
+.cont-1>input::-webkit-input-placeholder {
+    color: #bfbfbf;
+}
+
+
+
+
+
+
+
+
+
+
+	</style>
+
+</head>
+<body>
+<h2 th:text="${msg}" style="color: red"></h2>
+<form method="post" action="login">
+	<!-- 1、把登录页面分为背景和登录面板两个部分 -->
+	<div id="background"><img
+	        src="images/background1.jpg"/>
+	</div>
+	<div class="loginForm">
+	    <!-- 此处省略登录框内容代码 -->
+	    <h2 style="color: red">登录框</h2>
+	    
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="section">
+        <div class="all">
+            <div class="nav">
+                <a class="login on">普通登陆</a>
+                <a class="login">二维码登陆</a>
+            </div>
+            <div class="contentbox">
+                <div class="box active">
+                    <div class="cont-1">
+                        <input class="icon email" name="name" type="text" placeholder="邮箱">
+                        <input class="icon password" name="password" type="password" placeholder="密码">
+                        <div class="verify">
+                            >>>请依次点击"敏"，"享"，"昔"完成验证>>>
+                        </div>
+                        <button class="btn">登&nbsp;&nbsp;陆</button>
+                        <div class="about"><a href="#">忘记密码?&nbsp;&nbsp;<span></span>&nbsp;&nbsp;注册&nbsp;&nbsp;<span></span>&nbsp;&nbsp;关于网易邮箱帐号</a></div>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="cont-2">
+                        <span class="text">使用&nbsp;<a href="#">网易帐号管家</a>&nbsp;或&nbsp;<a href="#">邮箱大师</a>&nbsp;扫一扫快速登陆</span>
+                        <img src="img/img2_01.png" width="190" height="190">
+                        <div class="about"><a href="#">忘记密码?&nbsp;&nbsp;<span></span>&nbsp;&nbsp;注册&nbsp;&nbsp;<span></span>&nbsp;&nbsp;关于网易邮箱帐号</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $().ready(function(){
+            $(function(){
+                $(".nav a").off("click").on("click",function(){
+                    var index = $(this).index();
+                    $(this).addClass("on").siblings().removeClass("on");
+                    $(".contentbox .box").eq(index).addClass("active").siblings().removeClass("active");
+                });
+            });
+        })
+    </script>
+
+		
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>400service——用户登录</title>
+</head>
+<body>
+	<hr>
+	<h1>用户登录</h1>
+	<h2 th:text="${msg}" style="color: red"></h2>
+	
+	<form method="post" action="login">
+		用户名<input type="text" name="name"/><br/>
+		密    码<input type="password" name="password"/><br/>
+		<input type="submit" value="登录"/>
+	</form>
+	
+</body>
+</html> -->

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>错误处理页面</title>
+</head>
+<body>
+	<div style="width:500px;border:1px solid lightgray;margin:200px auto;padding:80px">
+	<!-- <h2 th:text="${msg}" style="color: red"></h2> -->
+		系统 出现了异常，异常原因是：
+		<span th:text="${exception}" style="color: red"></span>
+		    <!-- ${exception} -->
+		    <br><br>
+		    出现异常的地址是：
+		 <span th:text="${url}" style="color: red"></span>
+   			<!-- ${url} -->
+    </div>
+</body>
+</html>
